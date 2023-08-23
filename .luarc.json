@@ -14,6 +14,7 @@
         "/Users/solnes/.local/share/nvim/lazy/onedarkpro.nvim/lua",
         "/Users/solnes/.local/share/nvim/lazy/nvim-treesitter-textobjects/lua",
         "/Users/solnes/.local/share/nvim/lazy/mason-lspconfig.nvim/lua",
+        "${3rd}/luv/library",
         "${3rd}/luv/library"
     ]
 }
