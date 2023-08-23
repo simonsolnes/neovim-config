@@ -13,8 +13,8 @@ end
 
 
 
---local capabilities = vim.lsp.protocol.make_client_capabilities()
---capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 -- Swift
 require('lspconfig').sourcekit.setup({
@@ -23,6 +23,13 @@ require('lspconfig').sourcekit.setup({
 
 -- Lua
 require('lspconfig').lua_ls.setup({})
+-- Typescript
+require("lspconfig").tsserver.setup({
+	capabilities = capabilities,
+	on_attach = function(client)
+		client.resolved_capabilities.document_formatting = false
+	end,
+})
 
 -- Python
 local venv_path = os.getenv('VIRTUAL_ENV')
@@ -34,42 +41,33 @@ else
 	py_path = vim.g.python3_host_prog
 end
 require('lspconfig').pylsp.setup({
+	capabilities = capabilities,
+
 	settings = {
+		formatCommand = { "black" },
 		pylsp = {
 			plugins = {
-				black = { enabled = true },
 				flake8 = { enabled = true },
 				pylsp_mypy = {
 					enabled = true,
 					overrides = { "--python-executable", py_path, true },
 				},
-				-- auto-completion options
-				jedi_completion = { fuzzy = false },
-				-- import sorting
-
-				pyls_isort = { enabled = false },
-
-
-
 				autopep8 = { enabled = false },
 				yapf = { enabled = false },
-				-- linter options
-				--pylint = { enabled = false, executable = "pylint" },
-				pyflakes = { enabled = false },
-				pycodestyle = { enabled = false },
-				jedi = { enabled = false },
-				mccabe = { enabled = false },
-				preload = { enabled = false },
-				pydocstyle = { enabled = false },
-				rope_autoimport = { enabled = false },
-				rope_completion = { enabled = false },
+				pylint = { enabled = false, executable = "pylint" },
+				jedi = { enabled = true, environment = py_path },
 			},
 		},
 	}
 })
 
-local lsp_keymap = require('keymap').lsp_keymap
+-- require("null-ls").setup({
+-- 	sources = {
+-- 		require("null-ls").builtins.formatting.shfmt, -- shell script formatting
+-- 	},
+-- })
 
+local lsp_keymap = require('keymap').lsp_keymap
 vim.api.nvim_create_autocmd('LspAttach', {
 	group = vim.api.nvim_create_augroup('UserLspConfig', {}),
 	callback = function(ev)

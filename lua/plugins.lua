@@ -21,7 +21,7 @@ require("lazy").setup({
 		opts = {
 			colors = {
 				dark = {
-					bg = '#222222',
+					bg = '#1A1A1A',
 				},
 			}
 		},
@@ -55,7 +55,6 @@ require("lazy").setup({
 				opts = {
 					ensure_installed = {
 						'lua_ls',
-						'sourcekit',
 						'pylsp',
 					},
 					automatic_installation = true,

@@ -82,7 +82,7 @@ vim.keymap.set('n', alt('l'), vim.cmd.bn, { desc = "next buffer" })
 
 -- Telescope
 vim.keymap.set('n', leader('tf'), function() vim.cmd.Telescope('find_files') end, { desc = "Find files" })
-vim.keymap.set('n', leader('tg'), function() vim.cmd.Telescope('grep_string') end, { desc = "Grep string" })
+vim.keymap.set('n', leader('tg'), function() vim.cmd.Telescope('live_grep') end, { desc = "Grep string" })
 vim.keymap.set('n', leader('to'), function() vim.cmd.Telescope('oldfiles') end, { desc = "Find oldfiles" })
 vim.keymap.set('n', leader('tb'), function() vim.cmd.Telescope('buffers') end,
 	{ desc = "Find buffer" })
