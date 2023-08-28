@@ -12,6 +12,7 @@ local function parent_of(dir)
 end
 
 
+local utils = require("utils")
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
@@ -25,9 +26,10 @@ require('lspconfig').sourcekit.setup({
 require('lspconfig').lua_ls.setup({})
 -- Typescript
 require("lspconfig").tsserver.setup({
-	capabilities = capabilities,
+	--capabilities = capabilities,
 	on_attach = function(client)
-		client.resolved_capabilities.document_formatting = false
+		--client.resolved_capabilities.document_formatting = false
+		client.server_capabilities.documentFormattingProvider = false
 	end,
 })
 
@@ -40,32 +42,47 @@ if venv_path ~= nil then
 else
 	py_path = vim.g.python3_host_prog
 end
-require('lspconfig').pylsp.setup({
-	capabilities = capabilities,
 
+
+require('lspconfig').pylsp.setup({
 	settings = {
-		formatCommand = { "black" },
 		pylsp = {
 			plugins = {
-				flake8 = { enabled = true },
-				pylsp_mypy = {
-					enabled = true,
-					overrides = { "--python-executable", py_path, true },
-				},
+				-- formatter options
+				black = { enabled = false },
 				autopep8 = { enabled = false },
 				yapf = { enabled = false },
+				-- linter options
 				pylint = { enabled = false, executable = "pylint" },
-				jedi = { enabled = true, environment = py_path },
+				pyflakes = { enabled = false },
+				pycodestyle = { enabled = false },
+				-- type checker
+				pylsp_mypy = { enabled = false },
+				-- auto-completion options
+				jedi_completion = { fuzzy = true },
+				-- import sorting
+				pyls_isort = { enabled = false },
 			},
 		},
-	}
+	},
+	flags = {
+		debounce_text_changes = 200,
+	},
+	capabilities = capabilities,
 })
 
--- require("null-ls").setup({
--- 	sources = {
--- 		require("null-ls").builtins.formatting.shfmt, -- shell script formatting
--- 	},
--- })
+require("null-ls").setup({
+	sources = {
+		require("null-ls").builtins.formatting.shfmt,
+		require("null-ls").builtins.diagnostics.shellcheck,
+		require("null-ls").builtins.diagnostics.flake8,
+		require("null-ls").builtins.formatting.black,
+		require("null-ls").builtins.formatting.isort,
+		require("null-ls").builtins.formatting.prettier,
+		require("null-ls").builtins.code_actions.refactoring,
+	},
+	capabilities = capabilities,
+})
 
 local lsp_keymap = require('keymap').lsp_keymap
 vim.api.nvim_create_autocmd('LspAttach', {

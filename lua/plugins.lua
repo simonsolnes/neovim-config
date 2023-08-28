@@ -61,20 +61,39 @@ require("lazy").setup({
 				}
 			},
 			{
+				'jay-babu/mason-null-ls.nvim',
+				cmd = { 'NullLsInstall', 'NullLsUninstall' },
+				opts = {
+					ensure_installed = {
+						'stylua',
+						'markdownlint',
+						'mdformat',
+						-- 'selene',
+						'cpplint',
+						'clang_format',
+					},
+				},
+			},
+			{
 				'folke/neodev.nvim',
 				config = true
 			}
 		},
 	},
 	{
+		'jose-elias-alvarez/null-ls.nvim',
+		dependencies = { 'williamboman/mason.nvim', 'nvim-lua/plenary.nvim' },
+	},
+	{
 		-- Autocompletion
 		'hrsh7th/nvim-cmp',
 		dependencies = {
-			'L3MON4D3/LuaSnip',
-			'saadparwaiz1/cmp_luasnip',
-			'hrsh7th/cmp-nvim-lsp',
-			'hrsh7th/cmp-buffer',
-			'rafamadriz/friendly-snippets',
+			'https://github.com/L3MON4D3/LuaSnip',
+			'https://github.com/saadparwaiz1/cmp_luasnip',
+			'https://github.com/hrsh7th/cmp-nvim-lsp',
+			'https://github.com/hrsh7th/cmp-buffer',
+			'https://github.com/rafamadriz/friendly-snippets',
+			'https://github.com/hrsh7th/cmp-nvim-lsp-signature-help',
 		},
 		config = function()
 			require('plugins.nvim-cmp')
