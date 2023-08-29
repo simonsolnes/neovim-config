@@ -16,6 +16,8 @@ local utils = require("utils")
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+    require("mason").setup()
+    require("mason-lspconfig").setup()
 
 -- Swift
 require('lspconfig').sourcekit.setup({
@@ -44,31 +46,8 @@ else
 end
 
 
-require('lspconfig').pylsp.setup({
-	settings = {
-		pylsp = {
-			plugins = {
-				-- formatter options
-				black = { enabled = false },
-				autopep8 = { enabled = false },
-				yapf = { enabled = false },
-				-- linter options
-				pylint = { enabled = false, executable = "pylint" },
-				pyflakes = { enabled = false },
-				pycodestyle = { enabled = false },
-				-- type checker
-				pylsp_mypy = { enabled = false },
-				-- auto-completion options
-				jedi_completion = { fuzzy = true },
-				-- import sorting
-				pyls_isort = { enabled = false },
-			},
-		},
-	},
-	flags = {
-		debounce_text_changes = 200,
-	},
-	capabilities = capabilities,
+require('lspconfig').pyright.setup({
+	capabilities = capabilities
 })
 
 require("null-ls").setup({
@@ -81,7 +60,6 @@ require("null-ls").setup({
 		require("null-ls").builtins.formatting.prettier,
 		require("null-ls").builtins.code_actions.refactoring,
 	},
-	capabilities = capabilities,
 })
 
 local lsp_keymap = require('keymap').lsp_keymap

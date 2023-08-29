@@ -1,21 +1,22 @@
 -- Install lazy.nvim package manager
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable", -- latest stable release
+		'git',
+		'clone',
+		'--filter=blob:none',
+		'https://github.com/folke/lazy.nvim.git',
+		'--branch=stable', -- latest stable release
 		lazypath,
 	})
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup({
+require('lazy').setup({
+	require('plugins.bufferline'),
 	{
 		-- Onedarkpro: theme
-		"https://github.com/olimorris/onedarkpro.nvim",
+		'https://github.com/olimorris/onedarkpro.nvim',
 		priority = 1000,
 		lazy = false,
 		opts = {
@@ -23,7 +24,7 @@ require("lazy").setup({
 				dark = {
 					bg = '#1A1A1A',
 				},
-			}
+			},
 		},
 	},
 	{
@@ -43,50 +44,56 @@ require("lazy").setup({
 		-- nvim-lspconfig
 		'https://github.com/neovim/nvim-lspconfig',
 		dependencies = {
-			-- Automatically install LSPs to stdpath for neovim
 			{
-				'williamboman/mason-lspconfig.nvim',
+				'https://github.com/williamboman/mason-lspconfig.nvim',
 				dependencies = {
 					{
-						'williamboman/mason.nvim',
-						config = true,
+						'https://github.com/williamboman/mason.nvim',
+
+						ensure_installed = {
+							'clang-format',
+							'isort',
+							'lua-language-server',
+							'markdownlint',
+							'mdformat',
+							'pyright',
+							'python-lsp-server',
+							'stylua',
+							'typescript-language-server',
+							'actionlint',
+						},
 					}
 				},
 				opts = {
-					ensure_installed = {
-						'lua_ls',
-						'pylsp',
-					},
 					automatic_installation = true,
 				}
 			},
 			{
-				'jay-babu/mason-null-ls.nvim',
+				'https://github.com/jay-babu/mason-null-ls.nvim',
 				cmd = { 'NullLsInstall', 'NullLsUninstall' },
 				opts = {
 					ensure_installed = {
 						'stylua',
 						'markdownlint',
 						'mdformat',
-						-- 'selene',
 						'cpplint',
 						'clang_format',
 					},
 				},
 			},
 			{
-				'folke/neodev.nvim',
+				'https://github.com/folke/neodev.nvim',
 				config = true
 			}
 		},
 	},
 	{
-		'jose-elias-alvarez/null-ls.nvim',
-		dependencies = { 'williamboman/mason.nvim', 'nvim-lua/plenary.nvim' },
+		'https://github.com/jose-elias-alvarez/null-ls.nvim',
+		dependencies = { 'https://github.com/williamboman/mason.nvim', 'https://github.com/nvim-lua/plenary.nvim' },
 	},
 	{
 		-- Autocompletion
-		'hrsh7th/nvim-cmp',
+		'https://github.com/hrsh7th/nvim-cmp',
 		dependencies = {
 			'https://github.com/L3MON4D3/LuaSnip',
 			'https://github.com/saadparwaiz1/cmp_luasnip',
@@ -103,46 +110,71 @@ require("lazy").setup({
 		-- Fuzzyfinder
 		'https://github.com/nvim-telescope/telescope.nvim',
 		dependencies = {
-			"nvim-lua/plenary.nvim",
-			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make", cond = vim.fn.executable("make") == 1 },
+			'https://github.com/nvim-lua/plenary.nvim',
+			{
+				'https://github.com/nvim-telescope/telescope-fzf-native.nvim',
+				build = 'make',
+				cond = vim.fn.executable('make') == 1
+			},
 		},
 		config = function()
-			require("telescope").setup({
+			require('telescope').setup({
 				defaults = {
 					mappings = {
 						i = {
-							["<C-u>"] = false,
-							["<C-d>"] = false,
+							['<C-u>'] = false,
+							['<C-d>'] = false,
 						},
 					},
 				},
 			})
 
 			-- Enable telescope fzf native, if installed
-			pcall(require("telescope").load_extension, "fzf")
+			pcall(require('telescope').load_extension, 'fzf')
 		end,
 	},
 	{
 		-- Set lualine as statusline
-		'nvim-lualine/lualine.nvim',
+		'https://github.com/nvim-lualine/lualine.nvim',
 		-- See `:help lualine.txt`
 		opts = {
 			options = {
-				icons_enabled = false,
+				icons_enabled = true,
 				theme = 'onedark',
-				component_separators = '|',
+				component_separators = '',
 				section_separators = '',
 			},
+			sections = {
+				lualine_a = { 'mode' },
+				lualine_b = { { 'filename', path = 1 } },
+				lualine_c = {},
+				--lualine_x = { 'encoding', 'fileformat', 'filetype' },
+				lualine_x = { 'branch', 'diff', 'diagnostics' },
+				lualine_y = { 'progress' },
+				lualine_z = { 'location' }
+			},
+			inactive_sections = {
+				lualine_a = {},
+				lualine_b = {},
+				lualine_c = { { 'filename', path = 1 } },
+				lualine_x = { 'location' },
+				lualine_y = {},
+				lualine_z = {}
+			},
+			tabline = {},
+			winbar = {},
+			inactive_winbar = {},
+			extensions = {}
 		},
 	},
 	{
 		-- File tree
-		"http://github.com/nvim-neo-tree/neo-tree.nvim",
-		branch = "v3.x",
+		'http://github.com/nvim-neo-tree/neo-tree.nvim',
+		branch = 'v3.x',
 		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-tree/nvim-web-devicons",
-			"MunifTanjim/nui.nvim",
+			'https://github.com/nvim-lua/plenary.nvim',
+			'https://github.com/nvim-tree/nvim-web-devicons',
+			'https://github.com/MunifTanjim/nui.nvim',
 		},
 		opts = {
 			close_if_last_window = true,
@@ -160,28 +192,46 @@ require("lazy").setup({
 	},
 	{
 		-- Switch theme based on system
-		"https://github.com/f-person/auto-dark-mode.nvim",
+		'https://github.com/f-person/auto-dark-mode.nvim',
 		opts = {
 			update_interval = 5000,
 			set_dark_mode = function()
 				vim.api.nvim_set_option('background', 'dark')
-				vim.cmd.colorscheme("onedark")
+				vim.cmd.colorscheme('onedark')
+				require('lualine').setup({
+					options = {
+						theme = 'onedark'
+					}
+				})
+
+				-- vim.api.nvim_set_hl(0, 'LineNr', { fg = '#606060' })
+				-- vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#909090' })
+				-- vim.api.nvim_set_hl(0, 'BufferLineSelected', { fg = '#ff0000' })
+				-- vim.api.nvim_set_hl(0, 'BufferLineFill', { fg = '#ff0000' })
+				-- vim.api.nvim_set_hl(0, 'TabLinefill', { fg = '#ff0000' })
+				-- vim.api.nvim_set_hl(0, 'ColorColumn', { fg = '#ff0000' })
+				-- vim.api.nvim_set_hl(0, 'TabLine', { fg = '#ff0000' })
 			end,
 			set_light_mode = function()
 				vim.api.nvim_set_option('background', 'light')
-				vim.cmd.colorscheme("onelight")
+				vim.cmd.colorscheme('onelight')
+				require('lualine').setup({
+					options = {
+						theme = 'onelight'
+					}
+				})
 			end,
 		}
 	},
 	{
 		-- Commenting
-		'numToStr/Comment.nvim',
+		'https://github.com/numToStr/Comment.nvim',
 		opts = {}
 	},
 	{
 		-- Show keymaps live
-		"https://github.com/folke/which-key.nvim",
-		event = "VeryLazy",
+		'https://github.com/folke/which-key.nvim',
+		event = 'VeryLazy',
 		init = function()
 			vim.o.timeout = true
 			vim.o.timeoutlen = 150
@@ -211,16 +261,16 @@ require("lazy").setup({
 		'https://github.com/tpope/vim-sleuth'
 	},
 	{
-		"lewis6991/gitsigns.nvim",
-		event = { "BufReadPre", "BufNewFile" },
+		'https://github.com/lewis6991/gitsigns.nvim',
+		event = { 'BufReadPre', 'BufNewFile' },
 		opts = {
 			signs = {
-				add = { text = "▎" },
-				change = { text = "▎" },
-				delete = { text = "" },
-				topdelete = { text = "" },
-				changedelete = { text = "▎" },
-				untracked = { text = "▎" },
+				add = { text = '▎' },
+				change = { text = '▎' },
+				delete = { text = '' },
+				topdelete = { text = '' },
+				changedelete = { text = '▎' },
+				untracked = { text = '▎' },
 			},
 
 			-- on_attach = function(buffer)
@@ -231,25 +281,25 @@ require("lazy").setup({
 			-- 	end
 			--
 			-- 	-- stylua: ignore start
-			-- 	map("n", "]h", gs.next_hunk, "Next Hunk")
-			-- 	map("n", "[h", gs.prev_hunk, "Prev Hunk")
-			-- 	map({ "n", "v" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
-			-- 	map({ "n", "v" }, "<leader>ghr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
-			-- 	map("n", "<leader>ghS", gs.stage_buffer, "Stage Buffer")
-			-- 	map("n", "<leader>ghu", gs.undo_stage_hunk, "Undo Stage Hunk")
-			-- 	map("n", "<leader>ghR", gs.reset_buffer, "Reset Buffer")
-			-- 	map("n", "<leader>ghp", gs.preview_hunk, "Preview Hunk")
-			-- 	map("n", "<leader>ghb", function() gs.blame_line({ full = true }) end, "Blame Line")
-			-- 	map("n", "<leader>ghd", gs.diffthis, "Diff This")
-			-- 	map("n", "<leader>ghD", function() gs.diffthis("~") end, "Diff This ~")
-			-- 	map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
+			-- 	map('n', ']h', gs.next_hunk, 'Next Hunk')
+			-- 	map('n', '[h', gs.prev_hunk, 'Prev Hunk')
+			-- 	map({ 'n', 'v' }, '<leader>ghs', ':Gitsigns stage_hunk<CR>', 'Stage Hunk')
+			-- 	map({ 'n', 'v' }, '<leader>ghr', ':Gitsigns reset_hunk<CR>', 'Reset Hunk')
+			-- 	map('n', '<leader>ghS', gs.stage_buffer, 'Stage Buffer')
+			-- 	map('n', '<leader>ghu', gs.undo_stage_hunk, 'Undo Stage Hunk')
+			-- 	map('n', '<leader>ghR', gs.reset_buffer, 'Reset Buffer')
+			-- 	map('n', '<leader>ghp', gs.preview_hunk, 'Preview Hunk')
+			-- 	map('n', '<leader>ghb', function() gs.blame_line({ full = true }) end, 'Blame Line')
+			-- 	map('n', '<leader>ghd', gs.diffthis, 'Diff This')
+			-- 	map('n', '<leader>ghD', function() gs.diffthis('~') end, 'Diff This ~')
+			-- 	map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', 'GitSigns Select Hunk')
 			-- end,
 		},
 	},
 	{
 		-- Highlight TODO, HACK, etc.
-		"folke/todo-comments.nvim",
-		dependencies = { "nvim-lua/plenary.nvim" },
+		'https://github.com/folke/todo-comments.nvim',
+		dependencies = { 'https://github.com/nvim-lua/plenary.nvim' },
 		config = true,
 	},
 	{
@@ -258,13 +308,6 @@ require("lazy").setup({
 		opts = {
 			separator = '-',
 		},
-	},
-	{
-		'https://github.com/akinsho/bufferline.nvim',
-		dependencies = {
-			"nvim-tree/nvim-web-devicons",
-		},
-		config = true,
 	},
 	{
 		'https://github.com/simrat39/symbols-outline.nvim',

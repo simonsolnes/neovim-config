@@ -71,6 +71,10 @@ vim.keymap.set('n', control('b'), "<C-b>zz", { desc = "Scroll up" })
 -- Git
 vim.keymap.set('n', leader('gb'), function() vim.cmd.Gitsigns('blame_line') end, { desc = "Blame line" })
 
+--
+vim.keymap.set('n', leader('r'), "<cmd>!swift run<cr>", { desc = "run" })
+
+
 vim.keymap.set('n', '<C-n>', function() vim.cmd.Neotree('toggle') end, { desc = "Open filetree" })
 
 vim.keymap.set('n', '<C-s>', vim.cmd.SymbolsOutline, { desc = "Open filetree" })
