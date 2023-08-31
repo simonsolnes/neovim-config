@@ -82,6 +82,7 @@ vim.keymap.set('n', '<C-s>', vim.cmd.SymbolsOutline, { desc = "Open filetree" })
 -- Window
 vim.keymap.set('n', alt('h'), vim.cmd.bp, { desc = "previous buffer" })
 vim.keymap.set('n', alt('l'), vim.cmd.bn, { desc = "next buffer" })
+vim.keymap.set('n', alt('w'), ':bp<bar>sp<bar>bn<bar>bd<Enter>', { desc = "close buffer" })
 
 
 -- Telescope
@@ -107,7 +108,7 @@ return {
 
 		vim.keymap.set('n', leader('gr'), function() vim.cmd.Telescope('lsp_references') end,
 			{ desc = "Show references", buffer = buffnr })
-		--vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'go to definition', buffer = buffnr })
+		vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'go to definition', buffer = buffnr })
 		--puts doc header info into a float page
 		vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'hover', buffer = buffnr })
 
