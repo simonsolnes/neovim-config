@@ -88,6 +88,7 @@ vim.keymap.set('n', alt('w'), ':bp<bar>sp<bar>bn<bar>bd<Enter>', { desc = "close
 -- Telescope
 vim.keymap.set('n', leader('tf'), function() vim.cmd.Telescope('find_files') end, { desc = "Find files" })
 vim.keymap.set('n', leader('tg'), function() vim.cmd.Telescope('live_grep') end, { desc = "Grep string" })
+vim.keymap.set('n', leader('tr'), function() vim.cmd.Telescope('resume') end, { desc = "Resume telescope" })
 vim.keymap.set('n', leader('to'), function() vim.cmd.Telescope('oldfiles') end, { desc = "Find oldfiles" })
 vim.keymap.set('n', leader('tb'), function() vim.cmd.Telescope('buffers') end,
 	{ desc = "Find buffer" })
@@ -106,9 +107,10 @@ return {
 		vim.keymap.set('n', 'gl', function() vim.diagnostic.open_float() end,
 			{ desc = "Open diagnostic float", buffer = buffnr })
 
-		vim.keymap.set('n', leader('gr'), function() vim.cmd.Telescope('lsp_references') end,
+		vim.keymap.set('n', 'gr', function() vim.cmd.Telescope('lsp_references') end,
 			{ desc = "Show references", buffer = buffnr })
-		vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'go to definition', buffer = buffnr })
+		vim.keymap.set('n', 'gd', function() vim.cmd.Telescope('lsp_definitions') end,
+			{ desc = 'go to definition', buffer = buffnr })
 		--puts doc header info into a float page
 		vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'hover', buffer = buffnr })
 
@@ -118,11 +120,10 @@ return {
 			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 		end, { buffer = buffnr })
 
+		vim.keymap.set('n', leader('lh'), vim.lsp.buf.signature_help, { buffer = buffnr })
+
 		-- add LSP code actions
 		vim.keymap.set({ 'n', 'v' }, leader('ca'), vim.lsp.buf.code_action, { buffer = buffnr })
-
-		-- find references of a type
-		vim.keymap.set('n', 'gr', vim.lsp.buf.references, { buffer = buffnr })
 
 		vim.keymap.set('n', leader('z'), function() vim.cmd.Telescope('buffers') end, { buffer = buffnr })
 
@@ -136,7 +137,6 @@ return {
 		-- vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
 		-- vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
 		-- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-		-- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
 		-- vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
 		-- vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
 		-- vim.keymap.set('n', '<space>wl', function()
