@@ -70,6 +70,8 @@ vim.keymap.set('n', control('b'), "<C-b>zz", { desc = "Scroll up" })
 
 -- Git
 vim.keymap.set('n', leader('gb'), function() vim.cmd.Gitsigns('blame_line') end, { desc = "Blame line" })
+vim.keymap.set('n', ']h', function() vim.cmd.Gitsigns('next_hunk') end, { desc = "Next hunk" })
+vim.keymap.set('n', '[h', function() vim.cmd.Gitsigns('prev_hunk') end, { desc = "Previous hunk" })
 
 --
 vim.keymap.set('n', leader('r'), "<cmd>!swift run<cr>", { desc = "run" })
@@ -90,7 +92,7 @@ vim.keymap.set('n', leader('tf'), function() vim.cmd.Telescope('find_files') end
 vim.keymap.set('n', leader('tg'), function() vim.cmd.Telescope('live_grep') end, { desc = "Grep string" })
 vim.keymap.set('n', leader('tr'), function() vim.cmd.Telescope('resume') end, { desc = "Resume telescope" })
 vim.keymap.set('n', leader('to'), function() vim.cmd.Telescope('oldfiles') end, { desc = "Find oldfiles" })
-vim.keymap.set('n', leader('tb'), function() vim.cmd.Telescope('buffers') end,
+vim.keymap.set('n', leader('b'), function() vim.cmd.Telescope('buffers') end,
 	{ desc = "Find buffer" })
 vim.keymap.set('n', leader('ts'), function() vim.cmd.Telescope('lsp_dynamic_workspace_symbols') end,
 	{ desc = "Find workspace symbols" })

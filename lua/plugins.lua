@@ -302,13 +302,14 @@ require('lazy').setup({
 		dependencies = { 'https://github.com/nvim-lua/plenary.nvim' },
 		config = true,
 	},
-	{
-		-- Show the context parent that is scrolled off at the top
-		'https://github.com/nvim-treesitter/nvim-treesitter-context',
-		opts = {
-			separator = '-',
-		},
-	},
+	-- {
+	-- 	-- Show the context parent that is scrolled off at the top
+	-- 	'https://github.com/nvim-treesitter/nvim-treesitter-context',
+	--
+	-- 	-- opts = {
+	-- 	-- 	separator = '-',
+	-- 	-- },
+	-- },
 	{
 		'https://github.com/simrat39/symbols-outline.nvim',
 		config = true,
