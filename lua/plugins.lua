@@ -178,8 +178,8 @@ require('lazy').setup({
 		},
 		opts = {
 			close_if_last_window = true,
-			buffers = {
-				follow_current_file = true,
+			filesystem = {
+				follow_current_file = { enabled = true },
 			}
 		}
 	},
