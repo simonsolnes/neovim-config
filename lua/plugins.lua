@@ -312,6 +312,8 @@ require('lazy').setup({
 	{
 		'https://github.com/simrat39/symbols-outline.nvim',
 		config = true,
+	},
+	{
+		'https://github.com/simrat39/rust-tools.nvim',
 	}
-
 }, {})
