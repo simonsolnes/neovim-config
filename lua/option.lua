@@ -26,7 +26,10 @@ vim.opt.incsearch = true
 
 vim.opt.linebreak = true
 
+vim.cmd('set noexpandtab')
+vim.opt.shiftwidth = 4
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
 
 -- line numbers
 vim.opt.number = true
-
