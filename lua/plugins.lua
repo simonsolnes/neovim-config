@@ -183,7 +183,6 @@ require('lazy').setup({
 			}
 		}
 	},
-
 	{
 		-- LSP status
 		'https://github.com/j-hui/fidget.nvim',

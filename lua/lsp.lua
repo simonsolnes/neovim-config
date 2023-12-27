@@ -16,8 +16,8 @@ local utils = require("utils")
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-    require("mason").setup()
-    require("mason-lspconfig").setup()
+require("mason").setup()
+require("mason-lspconfig").setup()
 
 -- Swift
 require('lspconfig').sourcekit.setup({
@@ -45,6 +45,16 @@ else
 	py_path = vim.g.python3_host_prog
 end
 
+require('lspconfig').ruff_lsp.setup {
+	capabilities = capabilities,
+	on_attach = function() end,
+	init_options = {
+		settings = {
+			-- Any extra CLI arguments for `ruff` go here.
+			args = {},
+		}
+	}
+}
 
 require('lspconfig').pyright.setup({
 	capabilities = capabilities
@@ -54,9 +64,9 @@ require("null-ls").setup({
 	sources = {
 		require("null-ls").builtins.formatting.shfmt,
 		require("null-ls").builtins.diagnostics.shellcheck,
-		require("null-ls").builtins.diagnostics.flake8,
-		require("null-ls").builtins.formatting.black,
-		require("null-ls").builtins.formatting.isort,
+		--require("null-ls").builtins.diagnostics.flake8,
+		--require("null-ls").builtins.formatting.black,
+		--require("null-ls").builtins.formatting.isort,
 		require("null-ls").builtins.formatting.prettier,
 		require("null-ls").builtins.code_actions.refactoring,
 	},
