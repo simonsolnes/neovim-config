@@ -88,8 +88,12 @@ require('lazy').setup({
 		},
 	},
 	{
+		-- null-ls
 		'https://github.com/jose-elias-alvarez/null-ls.nvim',
-		dependencies = { 'https://github.com/williamboman/mason.nvim', 'https://github.com/nvim-lua/plenary.nvim' },
+		dependencies = {
+			'https://github.com/williamboman/mason.nvim',
+			'https://github.com/nvim-lua/plenary.nvim'
+		},
 	},
 	{
 		-- Autocompletion
