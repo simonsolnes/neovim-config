@@ -1,15 +1,9 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = ' '
 
-print('he')
-
-
 vim.opt.termguicolors = true
 
-
 -- Always show the signcolumn, otherwise it would shift the text each time diagnostics appear/become resolved.
--- global statusline
---vim.opt.laststatus = 3
 vim.opt.signcolumn = "yes"
 
 vim.opt.scrolloff = 10
@@ -26,7 +20,7 @@ vim.opt.incsearch = true
 
 vim.opt.linebreak = true
 
-vim.cmd('set noexpandtab')
+vim.opt.expandtab = true
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
