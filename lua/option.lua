@@ -6,6 +6,9 @@ vim.opt.termguicolors = true
 -- Always show the signcolumn, otherwise it would shift the text each time diagnostics appear/become resolved.
 vim.opt.signcolumn = "yes"
 
+vim.opt.laststatus = 0
+vim.opt.cmdheight = 0
+
 vim.opt.scrolloff = 10
 
 vim.opt.breakindent = true
