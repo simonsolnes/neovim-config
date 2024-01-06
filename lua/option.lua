@@ -3,7 +3,6 @@ vim.g.maplocalleader = ' '
 
 vim.opt.termguicolors = true
 
--- Always show the signcolumn, otherwise it would shift the text each time diagnostics appear/become resolved.
 vim.opt.signcolumn = "yes"
 
 vim.opt.laststatus = 0
@@ -13,10 +12,8 @@ vim.opt.scrolloff = 10
 
 vim.opt.breakindent = true
 
--- use OS clipboard
 vim.opt.clipboard = 'unnamed'
 
--- keep undo history on disk
 vim.opt.undofile = true
 
 vim.opt.incsearch = true
@@ -28,5 +25,10 @@ vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 
--- line numbers
 vim.opt.number = true
+
+vim.opt.timeout = true
+vim.opt.timeoutlen = 0
+
+vim.opt.splitbelow = true
+vim.opt.splitright = true
