@@ -142,7 +142,7 @@ require('lazy').setup({
 		'https://github.com/nvim-lualine/lualine.nvim',
 		-- See `:help lualine.txt`
 		config = function()
-			if false then
+			if true then
 				local winbar = {
 					lualine_a = { {
 						'filename',
@@ -152,7 +152,7 @@ require('lazy').setup({
 					lualine_b = { 'diff' },
 					lualine_c = {},
 					lualine_x = { 'diagnostics', 'encoding', },
-					lualine_y = {},
+					lualine_y = { 'progress' },
 					lualine_z = { 'location' }
 				}
 				require('lualine').setup({
@@ -165,7 +165,10 @@ require('lazy').setup({
 					tabline =
 					{
 						lualine_a = {},
-						lualine_y = { {
+						lualine_y = { { 'branch', icons_enabled = false } },
+						lualine_c = {},
+						lualine_x = {},
+						lualine_b = { {
 							'buffers',
 							icons_enabled = false,
 							symbols = {
@@ -176,9 +179,6 @@ require('lazy').setup({
 							use_mode_colors = false,
 							max_length = 100,
 						} },
-						lualine_c = {},
-						lualine_x = {},
-						lualine_b = { { 'branch', icons_enabled = false }, 'progress' },
 						lualine_z = {}
 					},
 					inactive_sections = {},
@@ -202,7 +202,7 @@ require('lazy').setup({
 							path = 1,
 							shorting_target = 0,
 						} },
-						lualine_b = { { 'branch', icons_enabled = false }, 'progress' },
+						lualine_b = { { 'branch', icons_enabled = false } },
 						lualine_c = { 'diff', 'diagnostics' },
 						lualine_x = {},
 						lualine_y = { {
@@ -222,7 +222,7 @@ require('lazy').setup({
 					sections = {},
 					winbar = {},
 					inactive_winbar = {},
-					extensions = {}
+					extensions = {},
 				})
 			end
 		end,
