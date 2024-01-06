@@ -291,10 +291,6 @@ require('lazy').setup({
 		-- Show keymaps live
 		'https://github.com/folke/which-key.nvim',
 		event = 'VeryLazy',
-		init = function()
-			vim.o.timeout = true
-			vim.o.timeoutlen = 150
-		end,
 		opts = {
 		}
 	},

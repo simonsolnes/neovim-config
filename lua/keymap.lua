@@ -1,11 +1,14 @@
 local wk = require('which-key')
+local macAltMap = require('utils').macAltMap
+
 wk.register({
 	name = 'henlo',
 	t = { name = 'telescope' },
-	k = { name = 'oiii' }
+	k = { name = 'oiii' },
+	["<leader>"] = { name = "leed" },
 }, { prefix = '<leader>' })
 
-function control(inp)
+local function control(inp)
 	return '<C-' .. inp .. '>'
 end
 
@@ -13,42 +16,59 @@ local leader = function(inp)
 	return '<Leader>' .. inp
 end
 
--- When using option key on mac it will render a new character, instead of <M-$key>
--- Therefore this map translates ⌥-$key to the special char that will be read by vim
+
 local alt = function(inp)
-	local has_meta_key = false
-	if has_meta_key then
-		return '<M-' .. inp .. '>'
+	if macAltMap[inp] ~= nil then
+		return macAltMap[inp]
 	else
-		local t = {
-			a = 'å',
-			A = 'Å',
-			b = '∫',
-			c = 'ç',
-			d = '∂',
-			f = 'ƒ',
-			g = '©',
-			h = '˙',
-			j = '∆',
-			k = '˚',
-			l = '¬',
-			m = 'µ',
-			o = 'ø',
-			p = 'π',
-			q = 'œ',
-			r = '®',
-			s = 'ß',
-			t = '†',
-			v = '√',
-			w = '∑',
-			x = '≈',
-			y = '\\',
-			z = 'Ω',
-		}
-		return t[inp]
+		return '<M-' .. inp .. '>'
 	end
 end
-vim.keymap.set('n', '<leader>kk', function() print("real lua function") end, { desc = "heyy" })
+
+
+local Xleader = "<leader>"
+
+
+for mode, mappings in pairs(
+	{
+		normal = {
+			[Xleader .. 'n' .. 'n'] = { 'Open filetree', function() vim.cmd.Neotree('toggle') end },
+			[Xleader .. 'n' .. 'b'] = { 'Open filetree', function() vim.cmd.Neotree('toggle', 'buffers') end },
+
+			[control('k')] = { 'Window up', control('w') .. 'k' },
+			[control('j')] = { 'Window down', control('w') .. 'j' },
+			[control('h')] = { 'Window left', control('w') .. 'h' },
+			[control('l')] = { 'Window right', control('w') .. 'l' },
+
+			[control('w') .. 'k'] = { 'Move window up', control('w') .. 'K' },
+			[control('w') .. 'j'] = { 'Move window down', control('w') .. 'J' },
+			[control('w') .. 'h'] = { 'Move window left', control('w') .. 'H' },
+			[control('w') .. 'l'] = { 'Move window right', control('w') .. 'L' },
+
+			[alt('Up')] = { 'Resize window up', ':resize -3<cr>' },
+			[alt('Down')] = { 'Resize window down', ':resize +3<cr>' },
+			[alt('Left')] = { 'Resize window left', ':vertical resize -3<cr>' },
+			[alt('Right')] = { 'Resize window left', ':vertical resize +3<cr>' },
+
+
+		},
+		visual = {
+			['K'] = { 'Move lines up', ":m '<-2<cr>gv=gv" },
+			['J'] = { 'Move lines down', ":m '>+1<cr>gv=gv" },
+			['p'] = { 'Paste with preserve register', '"_dP' }
+		}
+	}
+
+) do
+	local modeShorthand = ({ normal = 'n', visual = 'v' })[mode]
+	for keys, mapping in pairs(mappings) do
+		vim.keymap.set(modeShorthand, keys, mapping[2], { desc = mapping[1], noremap = true })
+	end
+end
+
+
+
+
 vim.keymap.set('n', leader('u'), vim.cmd.UndotreeToggle, { desc = "Undo tree" })
 vim.keymap.set('n', leader('h'), vim.cmd.HopChar1, { desc = "Hop" })
 vim.keymap.set('n', leader('git'), vim.cmd.Git, { desc = "Git" })
@@ -58,15 +78,12 @@ vim.keymap.set('n', '<', '<<', { desc = "Indent left" })
 vim.keymap.set('v', '>', '>gv', { desc = "Indent right" })
 vim.keymap.set('v', '<', '<gv', { desc = "Indent left" })
 
--- Move lines
-vim.keymap.set('v', 'J', ":m '>+1<cr>gv=gv", { desc = "Move lines down" })
-vim.keymap.set('v', 'K', ":m '<-2<cr>gv=gv", { desc = "Move lines up" })
 
 -- Keep cursor at the same spot
-vim.keymap.set('n', control('d'), "<C-d>zz", { desc = "Scroll half down" })
-vim.keymap.set('n', control('u'), "<C-u>zz", { desc = "Scroll half up" })
-vim.keymap.set('n', control('f'), "<C-f>zz", { desc = "Scroll down" })
-vim.keymap.set('n', control('b'), "<C-b>zz", { desc = "Scroll up" })
+vim.keymap.set('n', control('d'), "<C-d>M", { desc = "Scroll half down" })
+vim.keymap.set('n', control('u'), "<C-u>M", { desc = "Scroll half up" })
+vim.keymap.set('n', control('f'), "<C-f>M", { desc = "Scroll down" })
+vim.keymap.set('n', control('b'), "<C-b>M", { desc = "Scroll up" })
 
 -- Git
 vim.keymap.set('n', leader('gb'), function() vim.cmd.Gitsigns('blame_line') end, { desc = "Blame line" })
@@ -77,7 +94,8 @@ vim.keymap.set('n', '[h', function() vim.cmd.Gitsigns('prev_hunk') end, { desc =
 vim.keymap.set('n', leader('r'), "<cmd>!swift run<cr>", { desc = "run" })
 
 
-vim.keymap.set('n', '<C-n>', function() vim.cmd.Neotree('toggle') end, { desc = "Open filetree" })
+vim.keymap.set('n', '<C-n>t', function() vim.cmd.Neotree('toggle') end, { desc = "Open filetree" })
+vim.keymap.set('n', '<C-n>b', function() vim.cmd.Neotree('buffer') end, { desc = "Open buffers" })
 
 vim.keymap.set('n', '<C-s>', vim.cmd.SymbolsOutline, { desc = "Open filetree" })
 
