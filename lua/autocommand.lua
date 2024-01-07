@@ -1,3 +1,54 @@
+--[[
+local function number_of_windows()
+	local tabpage = vim.api.nvim_get_current_tabpage()
+	local windows = vim.api.nvim_tabpage_list_wins(tabpage)
+	local window_count = 0
+
+	for _, w in pairs(windows) do
+		local cfg = vim.api.nvim_win_get_config(w)
+		local ft = vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(w), "filetype")
+		if cfg.focusable == false then
+			break
+		end
+		if (cfg.relative == "" or cfg.external == false) and ft ~= "qf" then
+			window_count = window_count + 1
+		end
+	end
+
+	return window_count
+end
+
+vim.api.nvim_create_autocmd({ 'WinNew' }, {
+	callback = function()
+		if number_of_windows() > 1 then
+			require('plugins.lualine').multiple_windows()
+		end
+	end
+})
+
+vim.api.nvim_create_autocmd({ 'WinClosed' }, {
+	callback = function()
+		local got_number_of_windows = number_of_windows()
+		print('closed:', got_number_of_windows)
+
+		if got_number_of_windows < 3 then
+			print('running single')
+			require('plugins.lualine').single_window()
+		end
+	end
+})
+]]
+
+--[[
+vim.api.nvim_create_autocmd("VimEnter", {
+	callback = function()
+		if vim.fn.argv(0) == "" then
+			require("telescope.builtin").find_files()
+		end
+	end,
+})
+]]
+
 vim.api.nvim_create_user_command('Rfinder',
 	function()
 		local path = vim.api.nvim_buf_get_name(0)
