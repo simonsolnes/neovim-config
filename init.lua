@@ -16,3 +16,8 @@ require('lsp')
 -- camecaseword
 -- - llms
 -- - bootstrap
+--
+-- https://github.com/JoosepAlviste/nvim-ts-context-commentstring
+--
+-- fix todo.nvim
+-- add code spelling

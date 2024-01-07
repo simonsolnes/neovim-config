@@ -21,8 +21,6 @@ wk.register({
 	g = { name = 'Git' },
 }, { prefix = '<leader>' })
 
-local textcase = require('textcase')
-
 local map = {
 	normal = {
 		-- System
@@ -111,7 +109,7 @@ local map = {
 		[leader .. 'l' .. 's'] = { 'Signature', vim.lsp.buf.signature_help },
 		[leader .. 'l' .. 'i'] = { 'Import', require("lspimport").import },
 		[leader .. 'l' .. 'r'] = { 'Rename', vim.lsp.buf.rename },
-		[leader .. 'c' .. 'a'] = { 'Code action', vim.lsp.buf.code_action },
+		[leader .. 'l' .. 'a'] = { 'Code action', vim.lsp.buf.code_action },
 		[']' .. 'd'] = { 'Next diagnostic', vim.diagnostic.goto_next },
 		['[' .. 'd'] = { 'Previous diagnostic', vim.diagnostic.goto_prev },
 		['g' .. 'l'] = { 'Diagnostic float', vim.diagnostic.open_float },
