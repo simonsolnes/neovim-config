@@ -9,7 +9,7 @@ end
 
 -- When using option key on mac it will render a new character, instead of <M-$key>
 -- Therefore this map translates ⌥-$key to the special char that will be read by vim
-M.macAltMap = {
+local macAltMap = {
 	a = 'å',
 	A = 'Å',
 	b = '∫',
@@ -34,5 +34,19 @@ M.macAltMap = {
 	y = '\\',
 	z = 'Ω',
 }
+
+function M.control(inp)
+	return '<C-' .. inp .. '>'
+end
+
+function M.alt(inp)
+	if macAltMap[inp] ~= nil then
+		return macAltMap[inp]
+	else
+		return '<M-' .. inp .. '>'
+	end
+end
+
+M.leader = "<leader>"
 
 return M

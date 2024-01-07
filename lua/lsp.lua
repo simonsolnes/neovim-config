@@ -95,13 +95,13 @@ require("null-ls").setup({
 
 require("rust-tools").setup()
 
-local lsp_keymap = require('keymap').lsp_keymap
+--local lsp_keymap = require('keymap').lsp_keymap
 vim.api.nvim_create_autocmd('LspAttach', {
 	group = vim.api.nvim_create_augroup('UserLspConfig', {}),
 	callback = function(ev)
 		-- Enable completion triggered by <c-x><c-o>
 		vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-		lsp_keymap(ev.buf)
+		--lsp_keymap(ev.buf)
 		vim.api.nvim_buf_create_user_command(ev.buf, 'Format', function(_)
 			vim.lsp.buf.format()
 		end, { desc = 'Format current buffer with LSP' })

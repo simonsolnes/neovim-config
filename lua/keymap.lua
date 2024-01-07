@@ -1,5 +1,8 @@
 local wk = require('which-key')
-local macAltMap = require('utils').macAltMap
+local utils = require('utils')
+local alt = utils.alt
+local control = utils.control
+local leader = utils.leader
 
 wk.register({
 	t = { name = 'Telescope' },
@@ -7,32 +10,12 @@ wk.register({
 	g = { name = 'Git' },
 }, { prefix = '<leader>' })
 
-local function control(inp)
-	return '<C-' .. inp .. '>'
-end
-
-local leader = function(inp)
-	return '<Leader>' .. inp
-end
-
-
-local alt = function(inp)
-	if macAltMap[inp] ~= nil then
-		return macAltMap[inp]
-	else
-		return '<M-' .. inp .. '>'
-	end
-end
-
-
-local Xleader = "<leader>"
-
 local map = {
 	normal = {
 		-- System
-		[Xleader .. 'w'] = { 'Write', ':w <cr>' },
-		[Xleader .. 'q'] = { 'Quit', ':q <cr>' },
-		[Xleader .. 'r'] = { 'Run', "<cmd>!swift run<cr>" },
+		[leader .. 'w'] = { 'Write', ':w <cr>' },
+		[leader .. 'q'] = { 'Quit', ':q <cr>' },
+		[leader .. 'r'] = { 'Run', "<cmd>!swift run<cr>" },
 		[':'] = { 'Command', vim.cmd.Cmdpalette },
 		['/'] = { 'Serch', function() require('searchbox').match_all() end },
 
@@ -40,14 +23,14 @@ local map = {
 		['s'] = { 'Hop', vim.cmd.HopChar1 },
 
 		-- Sidepanels
-		[Xleader .. 'n' .. 'n'] = { 'Open filetree', function() vim.cmd.Neotree('toggle') end },
-		[Xleader .. 'n' .. 'b'] = { 'Open buffertree', function() vim.cmd.Neotree('toggle', 'buffers') end },
-		[Xleader .. 'n' .. 'u'] = { 'Open undotree', vim.cmd.UndotreeToggle },
-		[Xleader .. 'n' .. 's'] = { 'Open symbols', vim.cmd.SymbolsOutline },
+		[leader .. 'n' .. 'n'] = { 'Open filetree', function() vim.cmd.Neotree('toggle') end },
+		[leader .. 'n' .. 'b'] = { 'Open buffertree', function() vim.cmd.Neotree('toggle', 'buffers') end },
+		[leader .. 'n' .. 'u'] = { 'Open undotree', vim.cmd.UndotreeToggle },
+		[leader .. 'n' .. 's'] = { 'Open symbols', vim.cmd.SymbolsOutline },
 
 		-- Git
-		[Xleader .. 'g' .. 'i' .. 't'] = { 'Git', vim.cmd.Git },
-		[Xleader .. 'g' .. 'b'] = { 'Git blame', function() vim.cmd.Gitsigns('blame_line') end },
+		[leader .. 'g' .. 'i' .. 't'] = { 'Git', vim.cmd.Git },
+		[leader .. 'g' .. 'b'] = { 'Git blame', function() vim.cmd.Gitsigns('blame_line') end },
 		[']' .. 'h'] = { 'Next hunk', function() vim.cmd.Gitsigns('next_hunk') end },
 		['[' .. 'h'] = { 'Previous hunk', function() vim.cmd.Gitsigns('prev_hunk') end },
 
@@ -84,19 +67,19 @@ local map = {
 
 
 		-- Telescope
-		[Xleader .. 't' .. 'f'] = { 'Find files', function() vim.cmd.Telescope('find_files') end },
-		[Xleader .. 't' .. 'g'] = { 'Grep', function() vim.cmd.Telescope('live_grep') end },
-		[Xleader .. 't' .. 'r'] = { 'Resume', function() vim.cmd.Telescope('resume') end },
-		[Xleader .. 't' .. 'o'] = { 'Old files', function() vim.cmd.Telescope('oldfiles') end },
-		[Xleader .. 't' .. 'b'] = { 'Old files', function() vim.cmd.Telescope('buffers') end },
-		[Xleader .. 't' .. 's'] = { 'Symbols', function() vim.cmd.Telescope('lsp_dynamic_workspace_symbols') end },
+		[leader .. 't' .. 'f'] = { 'Find files', function() vim.cmd.Telescope('find_files') end },
+		[leader .. 't' .. 'g'] = { 'Grep', function() vim.cmd.Telescope('live_grep') end },
+		[leader .. 't' .. 'r'] = { 'Resume', function() vim.cmd.Telescope('resume') end },
+		[leader .. 't' .. 'o'] = { 'Old files', function() vim.cmd.Telescope('oldfiles') end },
+		[leader .. 't' .. 'b'] = { 'Old files', function() vim.cmd.Telescope('buffers') end },
+		[leader .. 't' .. 's'] = { 'Symbols', function() vim.cmd.Telescope('lsp_dynamic_workspace_symbols') end },
 
 		-- LSP
-		[Xleader .. 'x' .. 'x'] = { 'Trouble', function() vim.cmd.TroubleToggle() end },
-		[Xleader .. 'l' .. 's'] = { 'Signature', vim.lsp.buf.signature_help },
-		[Xleader .. 'l' .. 'i'] = { 'Import', require("lspimport").import },
-		[Xleader .. 'l' .. 'r'] = { 'Rename', vim.lsp.buf.rename },
-		[Xleader .. 'c' .. 'a'] = { 'Signature', vim.lsp.buf.code_action },
+		[leader .. 'x' .. 'x'] = { 'Trouble', function() vim.cmd.TroubleToggle() end },
+		[leader .. 'l' .. 's'] = { 'Signature', vim.lsp.buf.signature_help },
+		[leader .. 'l' .. 'i'] = { 'Import', require("lspimport").import },
+		[leader .. 'l' .. 'r'] = { 'Rename', vim.lsp.buf.rename },
+		[leader .. 'c' .. 'a'] = { 'Signature', vim.lsp.buf.code_action },
 		[']' .. 'd'] = { 'Next diagnostic', vim.diagnostic.goto_next },
 		['[' .. 'd'] = { 'Previous diagnostic', vim.diagnostic.goto_prev },
 		['g' .. 'l'] = { 'Diagnostic float', vim.diagnostic.open_float },
@@ -123,31 +106,3 @@ for mode, mappings in pairs(map) do
 		vim.keymap.set(modeShorthand, keys, mapping[2], { desc = mapping[1], noremap = false })
 	end
 end
-
-return {
-	lsp_keymap = function(buffnr)
-		-- suggested by lspconfig
-		-- -- Buffer local mappings.
-		-- -- See `:help vim.lsp.*` for documentation on any of the below functions
-		-- local opts = { buffer = ev.buf }
-		-- vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-		-- vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
-		-- vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-		-- vim.keymap.set('n', '<space>f', function()
-		--   vim.lsp.buf.format { async = true }
-		-- end, opts)
-		--
-		-- -- Selects a code action available at the current cursor position
-		-- bufmap('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>')
-		-- bufmap('x', '<F4>', '<cmd>lua vim.lsp.buf.range_code_action()<cr>')
-		--
-		-- -- Show diagnostics in a floating window
-		-- bufmap('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>')
-		--
-		-- -- Move to the previous diagnostic
-		-- bufmap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>')
-		--
-		-- -- Move to the next diagnostic
-		-- bufmap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>')
-	end
-}
