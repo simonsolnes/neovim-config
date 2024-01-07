@@ -43,6 +43,7 @@ cmp.setup {
       { name = 'nvim_lua' },
       { name = 'nvim_lsp_signature_help' },
       { name = 'nvim_lsp' },
+      { name = 'path' },
       { name = 'luasnip' },
       { name = 'buffer' },
    },
@@ -54,6 +55,7 @@ cmp.setup {
          vim_item.menu = ({
             buffer = "[Buffer]",
             nvim_lsp = "[LSP]",
+            path = "[path]",
             luasnip = "[LuaSnip]",
             nvim_lsp_signature_help = "[signature]",
             nvim_lua = "[Lua]",
