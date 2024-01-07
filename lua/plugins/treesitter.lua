@@ -32,10 +32,10 @@ require('nvim-treesitter.configs').setup({
 	incremental_selection = {
 		enable = true,
 		keymaps = {
-			init_selection = '<S-space>',
-			node_incremental = '<S-space>',
+			init_selection = '<cr>',
+			node_incremental = '<cr>',
 			scope_incremental = '<C-s>',
-			node_decremental = '<M-space>',
+			node_decremental = '<bs>',
 		},
 	},
 	textobjects = {
@@ -81,5 +81,25 @@ require('nvim-treesitter.configs').setup({
 				['<leader>A'] = '@parameter.inner',
 			},
 		},
+		lsp_interop = {
+			enable = true,
+			border = 'none',
+			floating_preview_opts = {},
+			peek_definition_code = {
+				["<leader>lp"] = "@function.outer",
+				["<leader>lP"] = "@class.outer",
+			},
+		},
+	},
+	textsubjects = {
+		enable = true,
+		prev_selection = ',', -- (Optional) keymap to select the previous selection
+		keymaps = {
+			['.'] = 'textsubjects-smart',
+			[';'] = 'textsubjects-container-outer',
+			['i;'] = 'textsubjects-container-inner',
+		},
+	},
+	extsubjects = {
 	}
 })
