@@ -281,8 +281,8 @@ require('lazy').setup({
 		'https://github.com/simrat39/rust-tools.nvim',
 	},
 	{
-		"folke/trouble.nvim",
-		dependencies = { "nvim-tree/nvim-web-devicons" },
+		"https://github.com/folke/trouble.nvim",
+		dependencies = { "https://github.com/nvim-tree/nvim-web-devicons" },
 		opts = {
 			-- your configuration comes here
 			-- or leave it empty to use the default settings
@@ -306,16 +306,16 @@ require('lazy').setup({
 		},
 		config = true,
 	},
-	{ "stevanmilic/nvim-lspimport" },
+	{ "https://github.com/stevanmilic/nvim-lspimport" },
 	{
-		"hachy/cmdpalette.nvim",
+		"https://github.com/hachy/cmdpalette.nvim",
 		lazy = true,
 		cmd = "Cmdpalette",
 		config = true,
 	},
 	{
-		"johmsalas/text-case.nvim",
-		dependencies = { "nvim-telescope/telescope.nvim" },
+		"https://github.com/johmsalas/text-case.nvim",
+		dependencies = { "https://github.com/nvim-telescope/telescope.nvim" },
 		config = function()
 			require("textcase").setup({})
 			require("telescope").load_extension("textcase")
@@ -325,6 +325,6 @@ require('lazy').setup({
 		},
 	},
 	{
-		"chrisgrieser/nvim-spider",
+		"https://github.com/chrisgrieser/nvim-spider",
 	},
 }, {})
