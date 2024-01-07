@@ -13,7 +13,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-	require('plugins.bufferline'),
+	--require('plugins.bufferline'),
 	{
 		-- Onedarkpro: theme
 		'https://github.com/olimorris/onedarkpro.nvim',
@@ -130,6 +130,10 @@ require('lazy').setup({
 							['<C-d>'] = false,
 						},
 					},
+					sorting_strategy = "ascending", -- display results top->bottom
+					layout_config = {
+						prompt_position = "top" -- search bar at the top
+					}
 				},
 			})
 
@@ -142,89 +146,7 @@ require('lazy').setup({
 		'https://github.com/nvim-lualine/lualine.nvim',
 		-- See `:help lualine.txt`
 		config = function()
-			if true then
-				local winbar = {
-					lualine_a = { {
-						'filename',
-						path = 1,
-						shorting_target = 0,
-					} },
-					lualine_b = { 'diff' },
-					lualine_c = {},
-					lualine_x = { 'diagnostics', 'encoding', },
-					lualine_y = { 'progress' },
-					lualine_z = { 'location' }
-				}
-				require('lualine').setup({
-					options = {
-						icons_enabled = true,
-						theme = 'onedark',
-						component_separators = '',
-						section_separators = '',
-					},
-					tabline =
-					{
-						lualine_a = {},
-						lualine_y = { { 'branch', icons_enabled = false } },
-						lualine_c = {},
-						lualine_x = {},
-						lualine_b = { {
-							'buffers',
-							icons_enabled = false,
-							symbols = {
-								modified = '+',
-								alternate_file = '',
-								directory = '',
-							},
-							use_mode_colors = false,
-							max_length = 100,
-						} },
-						lualine_z = {}
-					},
-					inactive_sections = {},
-					sections = {},
-					winbar = winbar,
-					inactive_winbar = winbar,
-					extensions = {}
-				})
-			else
-				require('lualine').setup({
-					options = {
-						icons_enabled = true,
-						theme = 'onedark',
-						component_separators = '',
-						section_separators = '',
-					},
-					tabline =
-					{
-						lualine_a = { {
-							'filename',
-							path = 1,
-							shorting_target = 0,
-						} },
-						lualine_b = { { 'branch', icons_enabled = false } },
-						lualine_c = { 'diff', 'diagnostics' },
-						lualine_x = {},
-						lualine_y = { {
-							'buffers',
-							icons_enabled = false,
-							symbols = {
-								modified = '+',
-								alternate_file = '',
-								directory = '',
-							},
-							use_mode_colors = false,
-							max_length = 100,
-						} },
-						lualine_z = { 'location' }
-					},
-					inactive_sections = {},
-					sections = {},
-					winbar = {},
-					inactive_winbar = {},
-					extensions = {},
-				})
-			end
+			require('plugins.lualine').multiple_windows()
 		end,
 	},
 	{
@@ -293,6 +215,11 @@ require('lazy').setup({
 		'https://github.com/folke/which-key.nvim',
 		event = 'VeryLazy',
 		opts = {
+			window = {
+				position = 'top',
+				margin = { 4, 4, 4, 4 }
+			}
+
 		}
 	},
 	{
@@ -309,8 +236,8 @@ require('lazy').setup({
 	},
 	{
 		-- Hop cursor to stuff
-		'https://github.com/phaazon/hop.nvim',
-		config = true
+		'https://github.com/smoka7/hop.nvim',
+		config = true,
 	},
 	{
 		-- Automatically infer indent-mode
@@ -356,8 +283,9 @@ require('lazy').setup({
 		-- Highlight TODO, HACK, etc.
 		'https://github.com/folke/todo-comments.nvim',
 		dependencies = { 'https://github.com/nvim-lua/plenary.nvim' },
-		config = true,
+		opts = {},
 	},
+	--TODO
 	-- {
 	-- 	-- Show the context parent that is scrolled off at the top
 	-- 	'https://github.com/nvim-treesitter/nvim-treesitter-context',
@@ -385,5 +313,29 @@ require('lazy').setup({
 			-- or leave it empty to use the default settings
 			-- refer to the configuration section below
 		},
-	}
+	},
+	--{
+	--"m4xshen/hardtime.nvim",
+	--dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+	--opts = {
+	--restricted_keys = {
+	--['x'] = { 'n', 'x' }
+	--}
+	--}
+	--},
+	--
+	{
+		'https://github.com/VonHeikemen/searchbox.nvim',
+		dependencies = {
+			'https://github.com/MunifTanjim/nui.nvim'
+		},
+		config = true,
+	},
+	{ "stevanmilic/nvim-lspimport" },
+	{
+		"hachy/cmdpalette.nvim",
+		lazy = true,
+		cmd = "Cmdpalette",
+		config = true,
+	},
 }, {})
