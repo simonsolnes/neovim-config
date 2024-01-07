@@ -3,7 +3,7 @@ local M = {}
 local shared = {
    options = {
       icons_enabled = true,
-      theme = 'onedark',
+      theme = require('theme').colorscheme,
       component_separators = '',
       section_separators = '',
    },
