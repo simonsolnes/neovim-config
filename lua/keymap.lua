@@ -1,5 +1,7 @@
 local wk = require('which-key')
 local utils = require('utils')
+local cmp = require('cmp')
+local luasnip = require('luasnip')
 local alt = utils.alt
 local control = utils.control
 local leader = utils.leader
@@ -97,12 +99,36 @@ local map = {
 
 		['>'] = { 'Indent right', '>gv' },
 		['<'] = { 'Indent left', '<gv' },
+	},
+	cmp = {
+		[control('n')] = cmp.mapping.select_next_item(),
+		[control('p')] = cmp.mapping.select_prev_item(),
+		[control('d')] = cmp.mapping.scroll_docs(-4),
+		[control('f')] = cmp.mapping.scroll_docs(4),
+		["<cr>"] = cmp.mapping({
+			i = function(fallback)
+				if cmp.visible() and cmp.get_active_entry() then
+					cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+				else
+					fallback()
+				end
+			end,
+			s = cmp.mapping.confirm({ select = true }),
+			c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
+		}),
 	}
+
 }
 
 for mode, mappings in pairs(map) do
-	local modeShorthand = ({ normal = 'n', visual = 'v' })[mode]
-	for keys, mapping in pairs(mappings) do
-		vim.keymap.set(modeShorthand, keys, mapping[2], { desc = mapping[1], noremap = false })
+	if mode == 'cmp' then
+		cmp.setup({
+			mapping = cmp.mapping.preset.insert(mappings)
+		})
+	else
+		local modeShorthand = ({ normal = 'n', visual = 'v' })[mode]
+		for keys, mapping in pairs(mappings) do
+			vim.keymap.set(modeShorthand, keys, mapping[2], { desc = mapping[1], noremap = false })
+		end
 	end
 end

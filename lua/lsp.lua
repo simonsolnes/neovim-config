@@ -27,6 +27,7 @@ require("mason-lspconfig").setup()
 -- 	root_dir = ".",
 -- })
 local swift_lsp = vim.api.nvim_create_augroup("swift_lsp", { clear = true })
+
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "swift" },
 	callback = function()

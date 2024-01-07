@@ -10,7 +10,10 @@ require('lsp')
 -- - surround
 -- - search symbols with fzf-lua
 -- - overseer
--- - learn treesitter objects
+-- - learn treesitter text objects
 -- - commenting library that works with jsx
 -- https://github.com/bkad/CamelCaseMotion
--- configur noice
+-- configure noice
+-- camecaseword
+-- - llms
+-- - bootstrap

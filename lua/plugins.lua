@@ -100,11 +100,11 @@ require('lazy').setup({
 		'https://github.com/hrsh7th/nvim-cmp',
 		dependencies = {
 			'https://github.com/L3MON4D3/LuaSnip',
-			'https://github.com/saadparwaiz1/cmp_luasnip',
 			'https://github.com/hrsh7th/cmp-nvim-lsp',
 			'https://github.com/hrsh7th/cmp-buffer',
 			'https://github.com/rafamadriz/friendly-snippets',
 			'https://github.com/hrsh7th/cmp-nvim-lsp-signature-help',
+			'https://github.com/saadparwaiz1/cmp_luasnip',
 		},
 		config = function()
 			require('plugins.nvim-cmp')
