@@ -22,6 +22,8 @@ wk.register({
 }, { prefix = '<leader>' })
 
 local map = {
+	-- https://github.com/chrisgrieser/nvim-various-textobjs
+	-- https://github.com/numToStr/Comment.nvim
 	normal = {
 		-- System
 		[leader .. 'w'] = { 'Write', ':w <cr>' },
@@ -37,6 +39,10 @@ local map = {
 		['w'] = { 'Word', spider_motion('w') },
 		['e'] = { 'End', spider_motion('e') },
 		['b'] = { 'Back', spider_motion('b') },
+
+		[leader .. 'o'] = { 'Open', function()
+			print(utils.get_visual_selection())
+		end },
 
 		-- Sidepanels
 		[leader .. 'n' .. 'n'] = { 'Open filetree', function() vim.cmd.Neotree('toggle') end },
@@ -132,6 +138,7 @@ local map = {
 		['w'] = { 'Word', spider_motion('w') },
 		['e'] = { 'End', spider_motion('e') },
 		['b'] = { 'Back', spider_motion('b') },
+		['y'] = { 'Yank and retain position', 'mcy`c' },
 	},
 	operator_pending = {
 		['w'] = { 'Word', spider_motion('w') },
@@ -166,7 +173,7 @@ for mode, mappings in pairs(map) do
 	else
 		local modeShorthand = ({ normal = 'n', visual_select = 'v', visual = 'x', operator_pending = 'o' })[mode]
 		for keys, mapping in pairs(mappings) do
-			vim.keymap.set(modeShorthand, keys, mapping[2], { desc = mapping[1], noremap = false })
+			vim.keymap.set(modeShorthand, keys, mapping[2], { desc = mapping[1], noremap = false, silent = true })
 		end
 	end
 end
