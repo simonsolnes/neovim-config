@@ -1,10 +1,19 @@
 local wk = require('which-key')
 local utils = require('utils')
 local cmp = require('cmp')
-local luasnip = require('luasnip')
 local alt = utils.alt
 local control = utils.control
 local leader = utils.leader
+
+local function textcase_word(arg)
+	return function()
+		require('textcase').current_word(arg)
+	end
+end
+
+local function spider_motion(motion)
+	return "<cmd>lua require('spider').motion('" .. motion .. "')<cr>"
+end
 
 wk.register({
 	t = { name = 'Telescope' },
@@ -12,23 +21,44 @@ wk.register({
 	g = { name = 'Git' },
 }, { prefix = '<leader>' })
 
+local textcase = require('textcase')
+
 local map = {
 	normal = {
 		-- System
 		[leader .. 'w'] = { 'Write', ':w <cr>' },
 		[leader .. 'q'] = { 'Quit', ':q <cr>' },
 		[leader .. 'r'] = { 'Run', "<cmd>!swift run<cr>" },
-		[':'] = { 'Command', vim.cmd.Cmdpalette },
+		--[':'] = { 'Command', vim.cmd.Cmdpalette },
 		['/'] = { 'Serch', function() require('searchbox').match_all() end },
 
 		-- Navigation
 		['s'] = { 'Hop', vim.cmd.HopChar1 },
+
+		-- Replacements
+		['w'] = { 'Word', spider_motion('w') },
+		['e'] = { 'End', spider_motion('e') },
+		['b'] = { 'Back', spider_motion('b') },
 
 		-- Sidepanels
 		[leader .. 'n' .. 'n'] = { 'Open filetree', function() vim.cmd.Neotree('toggle') end },
 		[leader .. 'n' .. 'b'] = { 'Open buffertree', function() vim.cmd.Neotree('toggle', 'buffers') end },
 		[leader .. 'n' .. 'u'] = { 'Open undotree', vim.cmd.UndotreeToggle },
 		[leader .. 'n' .. 's'] = { 'Open symbols', vim.cmd.SymbolsOutline },
+
+		-- Text case conversion
+		[leader .. 'c' .. 's'] = { 'Snake case (lorem_ipsum)', textcase_word('to_snake_case') },
+		[leader .. 'c' .. 'k'] = { 'Kebab case (lorem-ipsum)', textcase_word('to_dash_case') },
+		[leader .. 'c' .. 'f'] = { 'Title kebab case (Lorem-Ipsum)', textcase_word('to_title_dash_case') },
+		[leader .. 'c' .. 'n'] = { 'Constant case (LOREM_IPSUM)', textcase_word('to_constant_case') },
+		[leader .. 'c' .. 'd'] = { 'Dot case (lorem.ipsum)', textcase_word('to_dot_case') },
+		[leader .. 'c' .. 'c'] = { 'Camel case (loremIpsum)', textcase_word('to_camel_case') },
+		[leader .. 'c' .. 'p'] = { 'Pascal case (LoremIpsum)', textcase_word('to_pascal_case') },
+		[leader .. 'c' .. 'h'] = { 'Path case (lorem/ipsum)', textcase_word('to_path_case') },
+		[leader .. 'c' .. 'u'] = { 'Uppercase (LOREM IPSUM)', textcase_word('to_upper_case') },
+		[leader .. 'c' .. 'l'] = { 'Lowercase (lorem ipsum)', textcase_word('to_lower_case') },
+		[leader .. 'c' .. 't'] = { 'Title case (Lorem Ipsum)', textcase_word('to_title_case') },
+		[leader .. 'c' .. 'r'] = { 'Phrase case (Lorem ipsum)', textcase_word('to_phrase_case') },
 
 		-- Git
 		[leader .. 'g' .. 'i' .. 't'] = { 'Git', vim.cmd.Git },
@@ -81,7 +111,7 @@ local map = {
 		[leader .. 'l' .. 's'] = { 'Signature', vim.lsp.buf.signature_help },
 		[leader .. 'l' .. 'i'] = { 'Import', require("lspimport").import },
 		[leader .. 'l' .. 'r'] = { 'Rename', vim.lsp.buf.rename },
-		[leader .. 'c' .. 'a'] = { 'Signature', vim.lsp.buf.code_action },
+		[leader .. 'c' .. 'a'] = { 'Code action', vim.lsp.buf.code_action },
 		[']' .. 'd'] = { 'Next diagnostic', vim.diagnostic.goto_next },
 		['[' .. 'd'] = { 'Previous diagnostic', vim.diagnostic.goto_prev },
 		['g' .. 'l'] = { 'Diagnostic float', vim.diagnostic.open_float },
@@ -92,13 +122,23 @@ local map = {
 		['g' .. 't'] = { 'Type definiition', vim.lsp.buf.type_definition },
 		['K'] = { 'Hover', vim.lsp.buf.hover },
 	},
-	visual = {
+	visual_select = {
 		['J'] = { 'Move lines down', ":m'>+<cr>gv=gv" },
 		['K'] = { 'Move lines up', ":m-2<cr>gv=gv" },
 		['p'] = { 'Paste with preserve register', '"_dP' },
 
 		['>'] = { 'Indent right', '>gv' },
 		['<'] = { 'Indent left', '<gv' },
+	},
+	visual = {
+		['w'] = { 'Word', spider_motion('w') },
+		['e'] = { 'End', spider_motion('e') },
+		['b'] = { 'Back', spider_motion('b') },
+	},
+	operator_pending = {
+		['w'] = { 'Word', spider_motion('w') },
+		['e'] = { 'End', spider_motion('e') },
+		['b'] = { 'Back', spider_motion('b') },
 	},
 	cmp = {
 		[control('n')] = cmp.mapping.select_next_item(),
@@ -126,7 +166,7 @@ for mode, mappings in pairs(map) do
 			mapping = cmp.mapping.preset.insert(mappings)
 		})
 	else
-		local modeShorthand = ({ normal = 'n', visual = 'v' })[mode]
+		local modeShorthand = ({ normal = 'n', visual_select = 'v', visual = 'x', operator_pending = 'o' })[mode]
 		for keys, mapping in pairs(mappings) do
 			vim.keymap.set(modeShorthand, keys, mapping[2], { desc = mapping[1], noremap = false })
 		end
