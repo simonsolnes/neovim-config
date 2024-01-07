@@ -36,7 +36,7 @@ local map = {
 		['/']                         = { 'Serch', function() require('searchbox').match_all() end },
 
 		-- Navigation
-		['s']                         = { 'Hop', vim.cmd.HopChar1 },
+		--['s']                         = { 'Hop', vim.cmd.HopChar1 },
 
 		-- Harpoon
 		[leader .. 'h' .. 'a']        = { 'Harpoon add', function() harpoon:list():append() end },
