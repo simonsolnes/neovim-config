@@ -1,6 +1,7 @@
 local wk = require('which-key')
-local utils = require('utils')
 local cmp = require('cmp')
+local harpoon = require("harpoon")
+local utils = require('utils')
 local alt = utils.alt
 local control = utils.control
 local leader = utils.leader
@@ -28,82 +29,90 @@ local map = {
 
 	normal = {
 		-- System
-		[leader .. 'w'] = { 'Write', ':w <cr>' },
-		[leader .. 'q'] = { 'Quit', ':q <cr>' },
-		[leader .. 'r'] = { 'Run', "<cmd>!swift run<cr>" },
-		[':'] = { 'Command', vim.cmd.Cmdpalette },
-		['/'] = { 'Serch', function() require('searchbox').match_all() end },
+		[leader .. 'w']               = { 'Write', ':w <cr>' },
+		[leader .. 'q']               = { 'Quit', ':q <cr>' },
+		[leader .. 'r']               = { 'Run', "<cmd>!swift run<cr>" },
+		[':']                         = { 'Command', vim.cmd.Cmdpalette },
+		['/']                         = { 'Serch', function() require('searchbox').match_all() end },
 
 		-- Navigation
-		['s'] = { 'Hop', vim.cmd.HopChar1 },
+		['s']                         = { 'Hop', vim.cmd.HopChar1 },
+
+		-- Harpoon
+		[leader .. 'h' .. 'a']        = { 'Harpoon add', function() harpoon:list():append() end },
+		[leader .. 'h' .. 'l']        = { 'Harpoon list', function() harpoon.ui:toggle_quick_menu(harpoon:list()) end },
+		[alt('t')]                    = { 'Harpoon list', function() harpoon:list():select(1) end },
+		[alt('s')]                    = { 'Harpoon list', function() harpoon:list():select(2) end },
+		[alt('r')]                    = { 'Harpoon list', function() harpoon:list():select(3) end },
+		[alt('a')]                    = { 'Harpoon list', function() harpoon:list():select(4) end },
 
 		-- Replacements
-		['w'] = { 'Word', spider_motion('w') },
-		['e'] = { 'End', spider_motion('e') },
-		['b'] = { 'Back', spider_motion('b') },
+		['w']                         = { 'Word', spider_motion('w') },
+		['e']                         = { 'End', spider_motion('e') },
+		['b']                         = { 'Back', spider_motion('b') },
 
-		[leader .. 'o'] = { 'Open', function()
+		[leader .. 'o']               = { 'Open', function()
 			vim.cmd.normal('yL')
 			local url = vim.fn.getreg('"')
 			os.execute('open' .. ' ' .. url)
 		end },
 
 		-- Sidepanels
-		[leader .. 'n' .. 'n'] = { 'Open filetree', function() vim.cmd.Neotree('toggle') end },
-		[leader .. 'n' .. 'b'] = { 'Open buffertree', function() vim.cmd.Neotree('toggle', 'buffers') end },
-		[leader .. 'n' .. 'u'] = { 'Open undotree', vim.cmd.UndotreeToggle },
-		[leader .. 'n' .. 's'] = { 'Open symbols', vim.cmd.SymbolsOutline },
+		[leader .. 'n' .. 'n']        = { 'Open filetree', function() vim.cmd.Neotree('toggle') end },
+		[leader .. 'n' .. 'b']        = { 'Open buffertree', function() vim.cmd.Neotree('toggle', 'buffers') end },
+		[leader .. 'n' .. 'u']        = { 'Open undotree', vim.cmd.UndotreeToggle },
+		[leader .. 'n' .. 's']        = { 'Open symbols', vim.cmd.SymbolsOutline },
 
 		-- Text case conversion
-		[leader .. 'c' .. 's'] = { 'Snake case (lorem_ipsum)', textcase_word('to_snake_case') },
-		[leader .. 'c' .. 'k'] = { 'Kebab case (lorem-ipsum)', textcase_word('to_dash_case') },
-		[leader .. 'c' .. 'f'] = { 'Title kebab case (Lorem-Ipsum)', textcase_word('to_title_dash_case') },
-		[leader .. 'c' .. 'n'] = { 'Constant case (LOREM_IPSUM)', textcase_word('to_constant_case') },
-		[leader .. 'c' .. 'd'] = { 'Dot case (lorem.ipsum)', textcase_word('to_dot_case') },
-		[leader .. 'c' .. 'c'] = { 'Camel case (loremIpsum)', textcase_word('to_camel_case') },
-		[leader .. 'c' .. 'p'] = { 'Pascal case (LoremIpsum)', textcase_word('to_pascal_case') },
-		[leader .. 'c' .. 'h'] = { 'Path case (lorem/ipsum)', textcase_word('to_path_case') },
-		[leader .. 'c' .. 'u'] = { 'Uppercase (LOREM IPSUM)', textcase_word('to_upper_case') },
-		[leader .. 'c' .. 'l'] = { 'Lowercase (lorem ipsum)', textcase_word('to_lower_case') },
-		[leader .. 'c' .. 't'] = { 'Title case (Lorem Ipsum)', textcase_word('to_title_case') },
-		[leader .. 'c' .. 'r'] = { 'Phrase case (Lorem ipsum)', textcase_word('to_phrase_case') },
+		[leader .. 'c' .. 's']        = { 'Snake case (lorem_ipsum)', textcase_word('to_snake_case') },
+		[leader .. 'c' .. 'k']        = { 'Kebab case (lorem-ipsum)', textcase_word('to_dash_case') },
+		[leader .. 'c' .. 'f']        = { 'Title kebab case (Lorem-Ipsum)', textcase_word('to_title_dash_case') },
+		[leader .. 'c' .. 'n']        = { 'Constant case (LOREM_IPSUM)', textcase_word('to_constant_case') },
+		[leader .. 'c' .. 'd']        = { 'Dot case (lorem.ipsum)', textcase_word('to_dot_case') },
+		[leader .. 'c' .. 'c']        = { 'Camel case (loremIpsum)', textcase_word('to_camel_case') },
+		[leader .. 'c' .. 'p']        = { 'Pascal case (LoremIpsum)', textcase_word('to_pascal_case') },
+		[leader .. 'c' .. 'h']        = { 'Path case (lorem/ipsum)', textcase_word('to_path_case') },
+		[leader .. 'c' .. 'u']        = { 'Uppercase (LOREM IPSUM)', textcase_word('to_upper_case') },
+		[leader .. 'c' .. 'l']        = { 'Lowercase (lorem ipsum)', textcase_word('to_lower_case') },
+		[leader .. 'c' .. 't']        = { 'Title case (Lorem Ipsum)', textcase_word('to_title_case') },
+		[leader .. 'c' .. 'r']        = { 'Phrase case (Lorem ipsum)', textcase_word('to_phrase_case') },
 
 		-- Git
 		[leader .. 'g' .. 'i' .. 't'] = { 'Git', vim.cmd.Git },
-		[leader .. 'g' .. 'b'] = { 'Git blame', function() vim.cmd.Gitsigns('blame_line') end },
-		[']' .. 'h'] = { 'Next hunk', function() vim.cmd.Gitsigns('next_hunk') end },
-		['[' .. 'h'] = { 'Previous hunk', function() vim.cmd.Gitsigns('prev_hunk') end },
+		[leader .. 'g' .. 'b']        = { 'Git blame', function() vim.cmd.Gitsigns('blame_line') end },
+		[']' .. 'h']                  = { 'Next hunk', function() vim.cmd.Gitsigns('next_hunk') end },
+		['[' .. 'h']                  = { 'Previous hunk', function() vim.cmd.Gitsigns('prev_hunk') end },
 
 		-- Indentation
-		['>'] = { 'Indent right', '>>' },
-		['<'] = { 'Indent left', '<<' },
+		['>']                         = { 'Indent right', '>>' },
+		['<']                         = { 'Indent left', '<<' },
 
 		-- Windows
-		[control('k')] = { 'Window up', control('w') .. 'k' },
-		[control('j')] = { 'Window down', control('w') .. 'j' },
-		[control('h')] = { 'Window left', control('w') .. 'h' },
-		[control('l')] = { 'Window right', control('w') .. 'l' },
-		[control('w') .. 'k'] = { 'Move window up', control('w') .. 'K' },
-		[control('w') .. 'j'] = { 'Move window down', control('w') .. 'J' },
-		[control('w') .. 'h'] = { 'Move window left', control('w') .. 'H' },
-		[control('w') .. 'l'] = { 'Move window right', control('w') .. 'L' },
-		[alt('Up')] = { 'Resize window up', ':resize -3<cr>' },
-		[alt('Down')] = { 'Resize window down', ':resize +3<cr>' },
-		[alt('Left')] = { 'Resize window left', ':vertical resize -3<cr>' },
-		[alt('Right')] = { 'Resize window right', ':vertical resize +3<cr>' },
+		[control('k')]                = { 'Window up', control('w') .. 'k' },
+		[control('j')]                = { 'Window down', control('w') .. 'j' },
+		[control('h')]                = { 'Window left', control('w') .. 'h' },
+		[control('l')]                = { 'Window right', control('w') .. 'l' },
+		[control('w') .. 'k']         = { 'Move window up', control('w') .. 'K' },
+		[control('w') .. 'j']         = { 'Move window down', control('w') .. 'J' },
+		[control('w') .. 'h']         = { 'Move window left', control('w') .. 'H' },
+		[control('w') .. 'l']         = { 'Move window right', control('w') .. 'L' },
+		[alt('Up')]                   = { 'Resize window up', ':resize -3<cr>' },
+		[alt('Down')]                 = { 'Resize window down', ':resize +3<cr>' },
+		[alt('Left')]                 = { 'Resize window left', ':vertical resize -3<cr>' },
+		[alt('Right')]                = { 'Resize window right', ':vertical resize +3<cr>' },
 
 		-- Buffers
-		[alt('l')] = { 'Next buffer', vim.cmd.bn },
-		[alt('h')] = { 'Previous buffer', vim.cmd.bp },
-		[alt('w')] = { 'Close buffer', ':bp<bar>sp<bar>bn<bar>bd<Enter>' },
+		[alt('l')]                    = { 'Next buffer', vim.cmd.bn },
+		[alt('h')]                    = { 'Previous buffer', vim.cmd.bp },
+		[alt('w')]                    = { 'Close buffer', ':bp<bar>sp<bar>bn<bar>bd<Enter>' },
 
 		-- Scroll
-		[control('u')] = { 'Scroll half up', control('u') .. 'M' },
-		[control('d')] = { 'Scroll half down', control('d') .. 'M' },
-		[control('b')] = { 'Scroll up', control('b') .. 'M' },
-		[control('f')] = { 'Scroll down', control('f') .. 'M' },
-		[control('e')] = { 'Scroll down', control('e') .. control('e') .. control('e') },
-		[control('y')] = { 'Scroll up', control('y') .. control('y') .. control('y') },
+		[control('u')]                = { 'Scroll half up', control('u') .. 'M' },
+		[control('d')]                = { 'Scroll half down', control('d') .. 'M' },
+		[control('b')]                = { 'Scroll up', control('b') .. 'M' },
+		[control('f')]                = { 'Scroll down', control('f') .. 'M' },
+		[control('e')]                = { 'Scroll down', control('e') .. control('e') .. control('e') },
+		[control('y')]                = { 'Scroll up', control('y') .. control('y') .. control('y') },
 
 
 		-- Telescope
