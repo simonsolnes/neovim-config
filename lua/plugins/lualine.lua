@@ -81,6 +81,7 @@ function M.multiple_windows()
       inactive_winbar = winbar,
       extensions = {}
    })
+   vim.opt.laststatus = 0
 end
 
 return M

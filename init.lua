@@ -7,13 +7,10 @@ require('lsp')
 -- todo
 -- - replace hop with leap
 -- - surround
--- - search symbols with fzf-lua
 -- - overseer
 -- - learn treesitter text objects
 -- - commenting library that works with jsx
--- https://github.com/bkad/CamelCaseMotion
 -- configure noice
--- camecaseword
 -- - llms
 -- - bootstrap
 --
@@ -21,3 +18,8 @@ require('lsp')
 --
 -- fix todo.nvim
 -- add code spelling
+
+-- https://github.com/Bekaboo/dropbar.nvim#installation
+
+-- overseer run a file on save
+-- https://github.com/Jezda1337/nvim-html-css

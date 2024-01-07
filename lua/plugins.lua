@@ -100,11 +100,11 @@ require('lazy').setup({
 		'https://github.com/hrsh7th/nvim-cmp',
 		dependencies = {
 			'https://github.com/L3MON4D3/LuaSnip',
+			'https://github.com/saadparwaiz1/cmp_luasnip',
 			'https://github.com/hrsh7th/cmp-nvim-lsp',
 			'https://github.com/hrsh7th/cmp-buffer',
 			'https://github.com/rafamadriz/friendly-snippets',
 			'https://github.com/hrsh7th/cmp-nvim-lsp-signature-help',
-			'https://github.com/saadparwaiz1/cmp_luasnip',
 			'https://github.com/hrsh7th/cmp-path',
 		},
 		config = function()
@@ -125,15 +125,9 @@ require('lazy').setup({
 		config = function()
 			require('telescope').setup({
 				defaults = {
-					mappings = {
-						i = {
-							['<C-u>'] = false,
-							['<C-d>'] = false,
-						},
-					},
-					sorting_strategy = "ascending", -- display results top->bottom
+					sorting_strategy = "ascending",
 					layout_config = {
-						prompt_position = "top" -- search bar at the top
+						prompt_position = "top"
 					}
 				},
 			})
@@ -143,9 +137,7 @@ require('lazy').setup({
 		end,
 	},
 	{
-		-- Set lualine as statusline
 		'https://github.com/nvim-lualine/lualine.nvim',
-		-- See `:help lualine.txt`
 		config = function()
 			require('plugins.lualine').multiple_windows()
 		end,
@@ -271,22 +263,23 @@ require('lazy').setup({
 		dependencies = { 'https://github.com/nvim-lua/plenary.nvim' },
 		opts = {},
 	},
-	--TODO
-	-- {
-	-- 	-- Show the context parent that is scrolled off at the top
-	-- 	'https://github.com/nvim-treesitter/nvim-treesitter-context',
-	--
-	-- 	-- opts = {
-	-- 	-- 	separator = '-',
-	-- 	-- },
-	-- },
+	{
+		-- Show the context parent that is scrolled off at the top
+		'https://github.com/nvim-treesitter/nvim-treesitter-context',
+
+		opts = {
+			separator = nil,
+			min_window_height = 50,
+			max_lines = 1,
+			mode = 'topline',
+			trim_scope = 'inner',
+
+		},
+	},
 	{
 		-- Symbol tree
 		'https://github.com/simrat39/symbols-outline.nvim',
 		config = true,
-		opts = {
-			autofold_depth = 0,
-		}
 	},
 	{
 		'https://github.com/simrat39/rust-tools.nvim',
@@ -300,16 +293,17 @@ require('lazy').setup({
 			-- refer to the configuration section below
 		},
 	},
-	--{
-	--"m4xshen/hardtime.nvim",
-	--dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-	--opts = {
-	--restricted_keys = {
-	--['x'] = { 'n', 'x' }
-	--}
-	--}
-	--},
-	--
+	--[[
+	{
+		"m4xshen/hardtime.nvim",
+		dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+		opts = {
+			restricted_keys = {
+				['x'] = { 'n', 'x' }
+			}
+		}
+	},]]
+
 	{
 		'https://github.com/VonHeikemen/searchbox.nvim',
 		dependencies = {
@@ -331,9 +325,6 @@ require('lazy').setup({
 			require("textcase").setup({})
 			require("telescope").load_extension("textcase")
 		end,
-		keys = {
-			{ "ga.", "<cmd>TextCaseOpenTelescope<CR>", mode = { "n", "v" }, desc = "Telescope" },
-		},
 	},
 	{
 		"https://github.com/chrisgrieser/nvim-spider",
@@ -342,5 +333,36 @@ require('lazy').setup({
 		"https://github.com/chrisgrieser/nvim-various-textobjs",
 		lazy = false,
 		opts = { useDefaultKeymaps = true },
-	}
+	},
+	{
+		'https://github.com/gsuuon/tshjkl.nvim',
+		opts = {
+			keymaps = {
+				toggle = '<leader>tsu',
+			}
+		}
+	},
+	{
+		'https://github.com/norcalli/nvim-colorizer.lua',
+		opts = { '*' }
+	},
+	{
+		'https://github.com/windwp/nvim-ts-autotag',
+		opts = {
+			autotag = { enable = false, enable_rename = true }
+		}
+	},
+	{
+		'https://github.com/stevearc/dressing.nvim',
+		opts = {},
+	},
+	{
+		"kylechui/nvim-surround",
+		event = "VeryLazy",
+		config = function()
+			require("nvim-surround").setup({
+				-- Configuration here, or leave empty to use defaults
+			})
+		end
+	},
 }, {})

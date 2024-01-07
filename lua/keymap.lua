@@ -24,12 +24,14 @@ wk.register({
 local map = {
 	-- https://github.com/chrisgrieser/nvim-various-textobjs
 	-- https://github.com/numToStr/Comment.nvim
+	-- https://github.com/kylechui/nvim-surround
+
 	normal = {
 		-- System
 		[leader .. 'w'] = { 'Write', ':w <cr>' },
 		[leader .. 'q'] = { 'Quit', ':q <cr>' },
 		[leader .. 'r'] = { 'Run', "<cmd>!swift run<cr>" },
-		--[':'] = { 'Command', vim.cmd.Cmdpalette },
+		[':'] = { 'Command', vim.cmd.Cmdpalette },
 		['/'] = { 'Serch', function() require('searchbox').match_all() end },
 
 		-- Navigation
@@ -41,7 +43,9 @@ local map = {
 		['b'] = { 'Back', spider_motion('b') },
 
 		[leader .. 'o'] = { 'Open', function()
-			print(utils.get_visual_selection())
+			vim.cmd.normal('yL')
+			local url = vim.fn.getreg('"')
+			os.execute('open' .. ' ' .. url)
 		end },
 
 		-- Sidepanels
@@ -138,7 +142,7 @@ local map = {
 		['w'] = { 'Word', spider_motion('w') },
 		['e'] = { 'End', spider_motion('e') },
 		['b'] = { 'Back', spider_motion('b') },
-		['y'] = { 'Yank and retain position', 'mcy`c' },
+		['y'] = { 'Yank and retain position', 'ygv<esc>' },
 	},
 	operator_pending = {
 		['w'] = { 'Word', spider_motion('w') },
@@ -150,6 +154,7 @@ local map = {
 		[control('p')] = cmp.mapping.select_prev_item(),
 		[control('d')] = cmp.mapping.scroll_docs(-4),
 		[control('f')] = cmp.mapping.scroll_docs(4),
+		['<Tab>'] = cmp.mapping.confirm({ select = true }),
 		["<cr>"] = cmp.mapping({
 			i = function(fallback)
 				if cmp.visible() and cmp.get_active_entry() then
