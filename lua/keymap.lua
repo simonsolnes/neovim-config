@@ -93,8 +93,8 @@ local map = {
 		['K'] = { 'Hover', vim.lsp.buf.hover },
 	},
 	visual = {
-		['J'] = { 'Move lines down', ":m '>+1<cr>gv=gv" },
-		['K'] = { 'Move lines up', ":m '<-2<cr>gv=gv" },
+		['J'] = { 'Move lines down', ":m'>+<cr>gv=gv" },
+		['K'] = { 'Move lines up', ":m-2<cr>gv=gv" },
 		['p'] = { 'Paste with preserve register', '"_dP' },
 
 		['>'] = { 'Indent right', '>gv' },
