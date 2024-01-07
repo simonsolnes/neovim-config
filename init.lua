@@ -5,7 +5,6 @@ require('keymap')
 require('lsp')
 
 -- todo
--- - number of windows
 -- - replace hop with leap
 -- - surround
 -- - search symbols with fzf-lua
