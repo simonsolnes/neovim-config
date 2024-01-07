@@ -184,7 +184,17 @@ require('lazy').setup({
 	{
 		-- Commenting
 		'https://github.com/numToStr/Comment.nvim',
-		opts = {}
+		dependencies = {
+			'https://github.com/JoosepAlviste/nvim-ts-context-commentstring',
+			dependencies = {
+				'https://github.com/nvim-treesitter/nvim-treesitter',
+			},
+			config = true,
+		},
+		opts = function()
+			return { pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook() }
+		end,
+		lazy = false,
 	},
 	{
 		-- Show keymaps live
@@ -328,4 +338,9 @@ require('lazy').setup({
 	{
 		"https://github.com/chrisgrieser/nvim-spider",
 	},
+	{
+		"https://github.com/chrisgrieser/nvim-various-textobjs",
+		lazy = false,
+		opts = { useDefaultKeymaps = true },
+	}
 }, {})

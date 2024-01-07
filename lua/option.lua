@@ -28,7 +28,7 @@ vim.opt.softtabstop = 4
 vim.opt.number = true
 
 vim.opt.timeout = true
-vim.opt.timeoutlen = 300
+vim.opt.timeoutlen = 200
 
 vim.opt.splitbelow = true
 vim.opt.splitright = true
