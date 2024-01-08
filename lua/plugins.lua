@@ -34,7 +34,7 @@ require('lazy').setup({
 		lazy = false,
 		dependencies = {
 			'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
-			'https://github.com/RRethy/nvim-treesitter-textsubjects',
+			--'https://github.com/RRethy/nvim-treesitter-textsubjects',
 		},
 		build = ':TSUpdate',
 		config = function()
