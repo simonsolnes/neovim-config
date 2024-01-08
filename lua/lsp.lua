@@ -47,6 +47,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Lua
 require('lspconfig').lua_ls.setup({})
+
 -- Typescript
 require("lspconfig").tsserver.setup({
 	--capabilities = capabilities,
@@ -54,6 +55,9 @@ require("lspconfig").tsserver.setup({
 		--client.resolved_capabilities.document_formatting = false
 		client.server_capabilities.documentFormattingProvider = false
 	end,
+})
+require("lspconfig").eslint.setup({
+	capabilities = capabilities,
 })
 
 -- Python
