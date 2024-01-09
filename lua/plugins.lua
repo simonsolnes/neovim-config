@@ -26,13 +26,7 @@ require('lazy').setup({
 		'https://github.com/olimorris/onedarkpro.nvim',
 		priority = 1000,
 		lazy = false,
-		opts = {
-			colors = {
-				dark = {
-					bg = '#1C1C1C',
-				},
-			},
-		},
+		opts = require('theme').onedarkpro_opts,
 	},
 	{
 		-- Treesitter: parser
@@ -44,56 +38,12 @@ require('lazy').setup({
 			--'https://github.com/RRethy/nvim-treesitter-textsubjects',
 		},
 		build = ':TSUpdate',
-		config = function()
-			require('plugins.treesitter')
-		end,
+		config = require('plugins.treesitter'),
 	},
 	{
 		-- nvim-lspconfig
 		'https://github.com/neovim/nvim-lspconfig',
-		dependencies = {
-			{
-				'https://github.com/williamboman/mason-lspconfig.nvim',
-				dependencies = {
-					{
-						'https://github.com/williamboman/mason.nvim',
-
-						ensure_installed = {
-							'clang-format',
-							'isort',
-							'lua-language-server',
-							'markdownlint',
-							'mdformat',
-							'pyright',
-							'python-lsp-server',
-							'stylua',
-							'typescript-language-server',
-							'actionlint',
-						},
-					}
-				},
-				opts = {
-					automatic_installation = true,
-				}
-			},
-			{
-				'https://github.com/jay-babu/mason-null-ls.nvim',
-				cmd = { 'NullLsInstall', 'NullLsUninstall' },
-				opts = {
-					ensure_installed = {
-						'stylua',
-						'markdownlint',
-						'mdformat',
-						'cpplint',
-						'clang_format',
-					},
-				},
-			},
-			{
-				'https://github.com/folke/neodev.nvim',
-				config = true
-			}
-		},
+		dependencies = require('plugins.nvim-lspconfig').dependencies,
 	},
 	{
 		-- null-ls
@@ -115,12 +65,10 @@ require('lazy').setup({
 			'https://github.com/hrsh7th/cmp-nvim-lsp-signature-help',
 			'https://github.com/hrsh7th/cmp-path',
 		},
-		config = function()
-			require('plugins.nvim-cmp')
-		end,
+		config = require('plugins.nvim-cmp'),
 	},
 	{
-		-- Fuzzyfinder
+		-- Telescope
 		'https://github.com/nvim-telescope/telescope.nvim',
 		dependencies = {
 			'https://github.com/nvim-lua/plenary.nvim',
@@ -130,19 +78,7 @@ require('lazy').setup({
 				cond = vim.fn.executable('make') == 1
 			},
 		},
-		config = function()
-			require('telescope').setup({
-				defaults = {
-					sorting_strategy = "ascending",
-					layout_config = {
-						prompt_position = "top"
-					}
-				},
-			})
-
-			-- Enable telescope fzf native, if installed
-			pcall(require('telescope').load_extension, 'fzf')
-		end,
+		config = require('plugins.telescope'),
 	},
 	{
 		'https://github.com/nvim-lualine/lualine.nvim',
@@ -151,7 +87,7 @@ require('lazy').setup({
 		end,
 	},
 	{
-		-- File tree
+		-- Neo tree
 		'http://github.com/nvim-neo-tree/neo-tree.nvim',
 		branch = 'v3.x',
 		dependencies = {
@@ -159,12 +95,7 @@ require('lazy').setup({
 			'https://github.com/nvim-tree/nvim-web-devicons',
 			'https://github.com/MunifTanjim/nui.nvim',
 		},
-		opts = {
-			close_if_last_window = true,
-			filesystem = {
-				follow_current_file = { enabled = true },
-			}
-		}
+		opts = require('plugins.neotree')
 	},
 	{
 		-- LSP status
@@ -205,7 +136,6 @@ require('lazy').setup({
 				position = 'top',
 				margin = { 4, 4, 4, 4 }
 			}
-
 		}
 	},
 	{
