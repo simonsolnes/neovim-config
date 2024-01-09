@@ -13,7 +13,14 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-	--require('plugins.bufferline'),
+
+	{
+		'https://github.com/akinsho/bufferline.nvim',
+		dependencies = {
+			'https://github.com/nvim-tree/nvim-web-devicons',
+		},
+		config = require('plugins.bufferline')
+	},
 	{
 		-- Onedarkpro: theme
 		'https://github.com/olimorris/onedarkpro.nvim',

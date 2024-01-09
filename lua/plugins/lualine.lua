@@ -6,6 +6,7 @@ local shared = {
       theme = require('theme').colorscheme,
       component_separators = '',
       section_separators = '',
+      always_divide_middle = true,
    },
 }
 function M.single_window()
@@ -56,12 +57,12 @@ function M.multiple_windows()
       lualine_z = { 'location' }
    }
    require('lualine').setup({
-      tabline =
-      {
-         lualine_a = {},
+      --[[
+      tabline = {
+         --lualine_a = {},
          lualine_y = { { 'branch', icons_enabled = false } },
-         lualine_c = {},
-         lualine_x = {},
+         --lualine_c = {},
+         --lualine_x = {},
          lualine_b = { {
             'buffers',
             icons_enabled = false,
@@ -73,8 +74,9 @@ function M.multiple_windows()
             use_mode_colors = false,
             max_length = 100,
          } },
-         lualine_z = {}
+         --lualine_z = {}
       },
+      ]]
       inactive_sections = {},
       sections = {},
       winbar = winbar,
