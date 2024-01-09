@@ -287,7 +287,6 @@ require('lazy').setup({
 			max_lines = 1,
 			mode = 'topline',
 			trim_scope = 'inner',
-
 		},
 	},
 	{
@@ -386,5 +385,13 @@ require('lazy').setup({
 		config = function()
 			require("harpoon"):setup()
 		end
+	},
+	{
+		'gsuuon/tshjkl.nvim',
+		opts = {
+			keymaps = {
+				toggle = '<leader>p',
+			}
+		}
 	},
 }, {})
