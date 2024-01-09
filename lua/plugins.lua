@@ -322,7 +322,12 @@ require('lazy').setup({
 		dependencies = {
 			'https://github.com/MunifTanjim/nui.nvim'
 		},
-		config = true,
+		opts = {
+			defaults = {
+				highlight_matches = true,
+				clear_matches = false,
+			}
+		}
 	},
 	{ "https://github.com/stevanmilic/nvim-lspimport" },
 	{
