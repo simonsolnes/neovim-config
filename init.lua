@@ -23,3 +23,5 @@ require('lsp')
 
 -- overseer run a file on save
 -- https://github.com/Jezda1337/nvim-html-css
+--
+-- Show 'recording' in lualine

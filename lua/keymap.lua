@@ -22,6 +22,11 @@ wk.register({
 	g = { name = 'Git' },
 }, { prefix = '<leader>' })
 
+-- Very free buttons:
+-- C-j
+-- ) and ( for sentences in md etc and something else in code
+--
+-- Start tracking frequency use of these mappings
 local map = {
 	-- https://github.com/chrisgrieser/nvim-various-textobjs
 	-- https://github.com/numToStr/Comment.nvim
@@ -37,6 +42,8 @@ local map = {
 
 		-- Navigation
 		--['s']                         = { 'Hop', vim.cmd.HopChar1 },
+		['s']                         = { 'Jump', function() require("flash").jump() end },
+		['S']                         = { 'Jump', function() require("flash").treesitter() end },
 
 		-- Harpoon
 		[leader .. 'h' .. 'a']        = { 'Harpoon add', function() harpoon:list():append() end },
@@ -80,6 +87,9 @@ local map = {
 		-- Git
 		[leader .. 'g' .. 'i' .. 't'] = { 'Git', vim.cmd.Git },
 		[leader .. 'g' .. 'b']        = { 'Git blame', function() vim.cmd.Gitsigns('blame_line') end },
+		[leader .. 'g' .. 'l']        = { 'Get link', function()
+			require "gitlinker".get_buf_range_url("n", { action_callback = require "gitlinker.actions".open_in_browser })
+		end },
 		[']' .. 'h']                  = { 'Next hunk', function() vim.cmd.Gitsigns('next_hunk') end },
 		['[' .. 'h']                  = { 'Previous hunk', function() vim.cmd.Gitsigns('prev_hunk') end },
 
@@ -140,23 +150,29 @@ local map = {
 		['K'] = { 'Hover', vim.lsp.buf.hover },
 	},
 	visual_select = {
-		['J'] = { 'Move lines down', ":m'>+<cr>gv=gv" },
-		['K'] = { 'Move lines up', ":m-2<cr>gv=gv" },
-		['p'] = { 'Paste with preserve register', '"_dP' },
+		['J']                  = { 'Move lines down', ":m'>+<cr>gv=gv" },
+		['K']                  = { 'Move lines up', ":m-2<cr>gv=gv" },
+		['p']                  = { 'Paste with preserve register', '"_dP' },
 
-		['>'] = { 'Indent right', '>gv' },
-		['<'] = { 'Indent left', '<gv' },
+		['>']                  = { 'Indent right', '>gv' },
+		['<']                  = { 'Indent left', '<gv' },
+
+		[leader .. 'g' .. 'l'] = { 'Get link', function()
+			require "gitlinker".get_buf_range_url("n", { action_callback = require "gitlinker.actions".open_in_browser })
+		end },
 	},
 	visual = {
 		['w'] = { 'Word', spider_motion('w') },
 		['e'] = { 'End', spider_motion('e') },
 		['b'] = { 'Back', spider_motion('b') },
 		['y'] = { 'Yank and retain position', 'ygv<esc>' },
+		['s'] = { 'Jump', function() require("flash").jump() end },
 	},
 	operator_pending = {
 		['w'] = { 'Word', spider_motion('w') },
 		['e'] = { 'End', spider_motion('e') },
 		['b'] = { 'Back', spider_motion('b') },
+		['s'] = { 'Jump', function() require("flash").jump() end },
 	},
 	cmp = {
 		[control('n')] = cmp.mapping.select_next_item(),
