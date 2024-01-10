@@ -233,17 +233,16 @@ require('lazy').setup({
 			-- refer to the configuration section below
 		},
 	},
-	--[[
 	{
 		"m4xshen/hardtime.nvim",
 		dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
 		opts = {
+			enable = false,
 			restricted_keys = {
 				['x'] = { 'n', 'x' }
 			}
 		}
-	},]]
-
+	},
 	{
 		'https://github.com/VonHeikemen/searchbox.nvim',
 		dependencies = {
