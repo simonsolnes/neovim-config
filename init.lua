@@ -1,6 +1,7 @@
 require('option')
 require('plugins')
 require('autocommand')
+require('usercommand')
 require('keymap')
 require('lsp')
 
