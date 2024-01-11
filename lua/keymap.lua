@@ -133,8 +133,8 @@ local map = {
 		[leader .. 't' .. 'g'] = { 'Grep', function() vim.cmd.Telescope('live_grep') end },
 		[leader .. 't' .. 'r'] = { 'Resume', function() vim.cmd.Telescope('resume') end },
 		[leader .. 't' .. 'o'] = { 'Old files', function() vim.cmd.Telescope('oldfiles') end },
-		[leader .. 't' .. 'b'] = { 'Old files', function() vim.cmd.Telescope('buffers') end },
 		[leader .. 't' .. 's'] = { 'Symbols', function() vim.cmd.Telescope('lsp_dynamic_workspace_symbols') end },
+		[leader .. 'u'] = { 'Buffers', function() vim.cmd.Telescope('buffers') end },
 
 		-- LSP
 		[leader .. 'x' .. 'x'] = { 'Trouble', function() vim.cmd.TroubleToggle() end },

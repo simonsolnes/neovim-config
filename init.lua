@@ -26,3 +26,13 @@ require('lsp')
 -- https://github.com/Jezda1337/nvim-html-css
 --
 -- Show 'recording' in lualine
+if vim.g.neovide then
+   vim.opt.guifont = "SF Pro:13"
+end
+
+--- #Formatting:
+-- Start using
+-- https://github.com/stevearc/conform.nvim
+--
+-- https://github.com/stevearc/aerial.nvim
+-- https://github.com/folke/noice.nvim

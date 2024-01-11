@@ -52,7 +52,7 @@ function M.multiple_windows()
       } },
       lualine_b = { 'diff' },
       lualine_c = {},
-      lualine_x = { 'diagnostics', 'encoding', },
+      lualine_x = { 'diagnostics', },
       lualine_y = { 'progress' },
       lualine_z = { 'location' }
    }
