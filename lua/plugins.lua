@@ -325,4 +325,13 @@ require('lazy').setup({
 			}
 		}
 	},
+	{
+		'http://github.com/stevearc/aerial.nvim',
+		opts = {},
+		-- Optional dependencies
+		dependencies = {
+			"http://github.com/nvim-treesitter/nvim-treesitter",
+			"http://github.com/nvim-tree/nvim-web-devicons"
+		},
+	}
 }, {})

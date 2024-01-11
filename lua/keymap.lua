@@ -69,6 +69,9 @@ local map = {
 		[leader .. 'n' .. 'b']        = { 'Open buffertree', function() vim.cmd.Neotree('toggle', 'buffers') end },
 		[leader .. 'n' .. 'u']        = { 'Open undotree', vim.cmd.UndotreeToggle },
 		[leader .. 'n' .. 's']        = { 'Open symbols', vim.cmd.SymbolsOutline },
+		[leader .. 'n' .. 'a']        = { 'Open aerial', "<cmd>AerialToggle!<CR>" },
+		['<Down>']                    = { 'Open aerial', "<cmd>AerialNext<CR>" },
+		['<Up>']                      = { 'Open aerial', "<cmd>AerialPrev<CR>" },
 
 		-- Text case conversion
 		[leader .. 'c' .. 's']        = { 'Snake case (lorem_ipsum)', textcase_word('to_snake_case') },
