@@ -2,6 +2,7 @@ local wk = require('which-key')
 local cmp = require('cmp')
 local harpoon = require("harpoon")
 local utils = require('utils')
+local macros = require('macros')
 local alt = utils.alt
 local control = utils.control
 local leader = utils.leader
@@ -37,8 +38,8 @@ local map = {
 		[leader .. 'w']               = { 'Write', ':w <cr>' },
 		[leader .. 'q']               = { 'Quit', ':q <cr>' },
 		[leader .. 'r']               = { 'Run', "<cmd>!swift run<cr>" },
-		[':']                         = { 'Command', vim.cmd.Cmdpalette },
-		['/']                         = { 'Serch', function() require('searchbox').match_all() end },
+		-- [':']                         = { 'Command', vim.cmd.Cmdpalette },
+		-- ['/']                         = { 'Serch', function() require('searchbox').match_all() end },
 
 		-- Navigation
 		--['s']                         = { 'Hop', vim.cmd.HopChar1 },
@@ -58,11 +59,7 @@ local map = {
 		['e']                         = { 'End', spider_motion('e') },
 		['b']                         = { 'Back', spider_motion('b') },
 
-		[leader .. 'o']               = { 'Open', function()
-			vim.cmd.normal('yL')
-			local url = vim.fn.getreg('"')
-			os.execute('open' .. ' ' .. url)
-		end },
+		[leader .. 'o']               = { 'Open', macros.open_url_under_cursor },
 
 		-- Sidepanels
 		[leader .. 'n' .. 'n']        = { 'Open filetree', function() vim.cmd.Neotree('toggle') end },
@@ -90,9 +87,8 @@ local map = {
 		-- Git
 		[leader .. 'g' .. 'i' .. 't'] = { 'Git', vim.cmd.Git },
 		[leader .. 'g' .. 'b']        = { 'Git blame', function() vim.cmd.Gitsigns('blame_line') end },
-		[leader .. 'g' .. 'l']        = { 'Get link', function()
-			require "gitlinker".get_buf_range_url("n", { action_callback = require "gitlinker.actions".open_in_browser })
-		end },
+		[leader .. 'g' .. 'l' .. 'l'] = { 'Open link for line', macros.git.open_line_on_origin('n') },
+		[leader .. 'g' .. 'l' .. 'r'] = { 'Open repo', macros.git.open_origin_repo },
 		[']' .. 'h']                  = { 'Next hunk', function() vim.cmd.Gitsigns('next_hunk') end },
 		['[' .. 'h']                  = { 'Previous hunk', function() vim.cmd.Gitsigns('prev_hunk') end },
 
@@ -153,16 +149,16 @@ local map = {
 		['K'] = { 'Hover', vim.lsp.buf.hover },
 	},
 	visual_select = {
-		['J']                  = { 'Move lines down', ":m'>+<cr>gv=gv" },
-		['K']                  = { 'Move lines up', ":m-2<cr>gv=gv" },
-		['p']                  = { 'Paste with preserve register', '"_dP' },
+		['J']                         = { 'Move lines down', ":m'>+<cr>gv=gv" },
+		['K']                         = { 'Move lines up', ":m-2<cr>gv=gv" },
+		['p']                         = { 'Paste with preserve register', '"_dP' },
 
-		['>']                  = { 'Indent right', '>gv' },
-		['<']                  = { 'Indent left', '<gv' },
+		['>']                         = { 'Indent right', '>gv' },
+		['<']                         = { 'Indent left', '<gv' },
 
-		[leader .. 'g' .. 'l'] = { 'Get link', function()
-			require "gitlinker".get_buf_range_url("n", { action_callback = require "gitlinker.actions".open_in_browser })
-		end },
+		[leader .. 'g' .. 'l' .. 'l'] = { 'Open link for lines', macros.git.open_line_on_origin('v') },
+		['g' .. 'c' .. 'c']           = { '', function() print("hello") end }
+
 	},
 	visual = {
 		['w'] = { 'Word', spider_motion('w') },
@@ -172,7 +168,7 @@ local map = {
 		['s'] = { 'Jump', function() require("flash").jump() end },
 	},
 	operator_pending = {
-		['w'] = { 'Word', spider_motion('w') },
+		['w'] = { 'Word', ('w') },
 		['e'] = { 'End', spider_motion('e') },
 		['b'] = { 'Back', spider_motion('b') },
 		['s'] = { 'Jump', function() require("flash").jump() end },
@@ -183,17 +179,7 @@ local map = {
 		[control('d')] = cmp.mapping.scroll_docs(-4),
 		[control('f')] = cmp.mapping.scroll_docs(4),
 		['<Tab>'] = cmp.mapping.confirm({ select = true }),
-		["<cr>"] = cmp.mapping({
-			i = function(fallback)
-				if cmp.visible() and cmp.get_active_entry() then
-					cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
-				else
-					fallback()
-				end
-			end,
-			s = cmp.mapping.confirm({ select = true }),
-			c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
-		}),
+		["<cr>"] = require('plugins.nvim-cmp').special_cr_mapping(),
 	}
 
 }

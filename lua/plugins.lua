@@ -65,7 +65,7 @@ require('lazy').setup({
 			'https://github.com/hrsh7th/cmp-nvim-lsp-signature-help',
 			'https://github.com/hrsh7th/cmp-path',
 		},
-		config = require('plugins.nvim-cmp'),
+		config = require('plugins.nvim-cmp').config,
 	},
 	{
 		-- Telescope
