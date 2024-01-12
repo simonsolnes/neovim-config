@@ -206,7 +206,7 @@ require('lazy').setup({
 		"m4xshen/hardtime.nvim",
 		dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
 		opts = {
-			enable = false,
+			enabled = false,
 			restricted_keys = {
 				['x'] = { 'n', 'x' }
 			}
