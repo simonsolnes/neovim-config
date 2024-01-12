@@ -1,6 +1,8 @@
 local wk = require('which-key')
 local cmp = require('cmp')
-local harpoon = require("harpoon")
+local harpoon = require('harpoon')
+local gitsigns = require('gitsigns')
+
 local utils = require('utils')
 local macros = require('macros')
 local alt = utils.alt
@@ -86,11 +88,18 @@ local map = {
 
 		-- Git
 		[leader .. 'g' .. 'i' .. 't'] = { 'Git', vim.cmd.Git },
-		[leader .. 'g' .. 'b']        = { 'Git blame', function() vim.cmd.Gitsigns('blame_line') end },
 		[leader .. 'g' .. 'l' .. 'l'] = { 'Open link for line', macros.git.open_line_on_origin('n') },
 		[leader .. 'g' .. 'l' .. 'r'] = { 'Open repo', macros.git.open_origin_repo },
-		[']' .. 'h']                  = { 'Next hunk', function() vim.cmd.Gitsigns('next_hunk') end },
-		['[' .. 'h']                  = { 'Previous hunk', function() vim.cmd.Gitsigns('prev_hunk') end },
+		[leader .. 'g' .. 'b']        = { 'Git blame', function() gitsigns.blame_line { full = true } end },
+		[']' .. 'h']                  = { 'Next hunk', gitsigns.next_hunk },
+		['[' .. 'h']                  = { 'Previous hunk', gitsigns.prev_hunk },
+		[leader .. 'g' .. 's']        = { 'Stage hunk', gitsigns.stage_hunk },
+		[leader .. 'g' .. 'r']        = { 'Reset hunk', gitsigns.reset_hunk },
+		[leader .. 'g' .. 'b' .. 's'] = { 'Stage buffer', gitsigns.stage_buffer },
+		[leader .. 'g' .. 'h' .. 'p'] = { 'Preview hunk', gitsigns.preview_hunk },
+		[leader .. 'g' .. 't']        = { 'Toggle line blame', gitsigns.toggle_current_line_blame },
+		[leader .. 'g' .. 'd']        = { 'Diff', function() gitsigns.diffthis('~') end },
+		[leader .. 'g' .. 'k']        = { 'Toggle deleted', gitsigns.toggle_deleted },
 
 		-- Indentation
 		['>']                         = { 'Indent right', '>>' },
@@ -157,8 +166,10 @@ local map = {
 		['<']                         = { 'Indent left', '<gv' },
 
 		[leader .. 'g' .. 'l' .. 'l'] = { 'Open link for lines', macros.git.open_line_on_origin('v') },
-		['g' .. 'c' .. 'c']           = { '', function() print("hello") end }
+		['g' .. 'c' .. 'c']           = { '', function() print("hello") end },
 
+		[leader .. 'g' .. 's']        = { 'Stage hunk', function() gitsigns.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end },
+		[leader .. 'g' .. 'r']        = { 'Reset hunk', function() gitsigns.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end },
 	},
 	visual = {
 		['w'] = { 'Word', spider_motion('w') },
@@ -166,12 +177,14 @@ local map = {
 		['b'] = { 'Back', spider_motion('b') },
 		['y'] = { 'Yank and retain position', 'ygv<esc>' },
 		['s'] = { 'Jump', function() require("flash").jump() end },
+		['i' .. 'h'] = { 'Hunk', gitsigns.select_hunk },
 	},
 	operator_pending = {
 		['w'] = { 'Word', ('w') },
 		['e'] = { 'End', spider_motion('e') },
 		['b'] = { 'Back', spider_motion('b') },
 		['s'] = { 'Jump', function() require("flash").jump() end },
+		['i' .. 'h'] = { 'Hunk', gitsigns.select_hunk },
 	},
 	cmp = {
 		[control('n')] = cmp.mapping.select_next_item(),
