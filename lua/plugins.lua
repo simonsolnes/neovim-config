@@ -17,7 +17,7 @@ require('lazy').setup({
 	{
 		'https://github.com/akinsho/bufferline.nvim',
 		dependencies = 'https://github.com/nvim-tree/nvim-web-devicons',
-		config = require('plugins.bufferline')
+		config = require('plugins.bufferline').config
 	},
 	{
 		-- Onedarkpro: theme
@@ -33,7 +33,7 @@ require('lazy').setup({
 		lazy = false,
 		dependencies = 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
 		build = ':TSUpdate',
-		config = require('plugins.treesitter'),
+		config = require('plugins.treesitter').config,
 	},
 	{
 		-- nvim-lspconfig
@@ -67,19 +67,13 @@ require('lazy').setup({
 		'https://github.com/nvim-telescope/telescope.nvim',
 		dependencies = {
 			'https://github.com/nvim-lua/plenary.nvim',
-			{
-				'https://github.com/nvim-telescope/telescope-fzf-native.nvim',
-				build = 'make',
-				cond = vim.fn.executable('make') == 1
-			},
+			require('plugins/telescope').fzf_dependency,
 		},
-		config = require('plugins.telescope'),
+		config = require('plugins.telescope').config,
 	},
 	{
 		'https://github.com/nvim-lualine/lualine.nvim',
-		config = function()
-			require('plugins.lualine').multiple_windows()
-		end,
+		config = require('plugins.lualine').multiple_windows,
 	},
 	{
 		-- Neo tree
@@ -90,7 +84,7 @@ require('lazy').setup({
 			'https://github.com/nvim-tree/nvim-web-devicons',
 			'https://github.com/MunifTanjim/nui.nvim',
 		},
-		opts = require('plugins.neotree')
+		opts = require('plugins.neotree').opts,
 	},
 	{
 		-- LSP status
@@ -100,11 +94,7 @@ require('lazy').setup({
 	{
 		-- Switch theme based on system
 		'https://github.com/f-person/auto-dark-mode.nvim',
-		opts = {
-			update_interval = 5000,
-			set_dark_mode = require('theme').set_dark_mode,
-			set_light_mode = require('theme').set_light_mode,
-		}
+		opts = require('plugins.auto-dark-mode').opts
 	},
 	{
 		-- Commenting
@@ -122,12 +112,7 @@ require('lazy').setup({
 		-- Show keymaps live
 		'https://github.com/folke/which-key.nvim',
 		event = 'VeryLazy',
-		opts = {
-			window = {
-				position = 'top',
-				margin = { 4, 4, 4, 4 }
-			}
-		}
+		opts = require('plugins.which-key').opts
 	},
 	{
 		'https://github.com/folke/flash.nvim',
@@ -166,13 +151,7 @@ require('lazy').setup({
 	{
 		-- Show the context parent that is scrolled off at the top
 		'https://github.com/nvim-treesitter/nvim-treesitter-context',
-		opts = {
-			separator = nil,
-			min_window_height = 50,
-			max_lines = 1,
-			mode = 'topline',
-			trim_scope = 'inner',
-		},
+		opts = require('plugins.nvim-treesitter-context').opts,
 	},
 	{
 		-- Symbol tree
@@ -193,12 +172,7 @@ require('lazy').setup({
 			'https://MunifTanjim/nui.nvim',
 			'https://nvim-lua/plenary.nvim'
 		},
-		opts = {
-			enabled = false,
-			restricted_keys = {
-				['x'] = { 'n', 'x' }
-			}
-		}
+		opts = require('plugins.hardtime').opts,
 	},
 	{
 		'https://github.com/stevanmilic/nvim-lspimport'
@@ -206,22 +180,16 @@ require('lazy').setup({
 	{
 		'https://github.com/folke/noice.nvim',
 		event = 'VeryLazy',
-		opts = {
-			-- add any options here
-		},
 		dependencies = {
 			'MunifTanjim/nui.nvim',
 			--'rcarriga/nvim-notify',
 		},
-		config = require('plugins.noice')
+		opts = require('plugins.noice').opts
 	},
 	{
 		'https://github.com/johmsalas/text-case.nvim',
 		dependencies = 'https://github.com/nvim-telescope/telescope.nvim',
-		config = function()
-			require('textcase').setup({})
-			require('telescope').load_extension('textcase')
-		end,
+		config = require('plugins.text-case').config
 	},
 	{
 		'https://github.com/chrisgrieser/nvim-spider',
@@ -245,9 +213,7 @@ require('lazy').setup({
 	},
 	{
 		'https://github.com/windwp/nvim-ts-autotag',
-		opts = {
-			autotag = { enable = false, enable_rename = true }
-		}
+		opts = require('plugins.nvim-ts-autotag').opts,
 	},
 	{
 		'https://github.com/stevearc/dressing.nvim',
@@ -266,9 +232,7 @@ require('lazy').setup({
 		'https://github.com/ThePrimeagen/harpoon',
 		branch = 'harpoon2',
 		dependencies = { 'https://github.com/nvim-lua/plenary.nvim' },
-		config = function()
-			require('harpoon'):setup()
-		end
+		config = require('plugins.harpoon').config
 	},
 	{
 		'http://github.com/stevearc/aerial.nvim',

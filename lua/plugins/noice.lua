@@ -1,8 +1,10 @@
 return {
-   cmdline = {
-      format = {
-         cmdline = {
-            icon = ":"
+   opts = {
+      cmdline = {
+         format = {
+            cmdline = {
+               icon = ":"
+            }
          }
       }
    }
