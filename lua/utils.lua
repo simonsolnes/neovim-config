@@ -1,5 +1,9 @@
 local M = {}
 
+function M.lua_cmd(cmd)
+	return '<cmd>lua ' .. cmd .. '<cr>'
+end
+
 function M.executable(name)
 	if vim.fn.executable(name) > 0 then
 		return true

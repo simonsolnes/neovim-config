@@ -1,4 +1,3 @@
-local wk = require('which-key')
 local cmp = require('cmp')
 local harpoon = require('harpoon')
 local gitsigns = require('gitsigns')
@@ -6,17 +5,12 @@ local comment = require('Comment.api')
 local treesj = require('treesj')
 local sibling_swap = require('sibling-swap')
 
-local utils = require('utils')
 local macros = require('macros')
+local utils = require('utils')
+local lua_cmd = utils.lua_cmd
 local alt = utils.alt
 local control = utils.control
 local leader = utils.leader
-
-wk.register({
-	t = { name = 'Telescope' },
-	n = { name = 'Sidepanels' },
-	g = { name = 'Git' },
-}, { prefix = '<leader>' })
 
 local map = {
 	-- https://github.com/chrisgrieser/nvim-various-textobjs
@@ -178,6 +172,11 @@ local map = {
 		['e'] = { 'End', macros.spider_motion('e') },
 		['b'] = { 'Back', macros.spider_motion('b') },
 		['i' .. 'h'] = { 'Hunk', gitsigns.select_hunk },
+		['iw'] = { 'Subword', lua_cmd([[require('various-textobjs').subword('inner')]]) },
+		['iW'] = { 'Word', 'iw' },
+		['aw'] = { 'Subword', lua_cmd([[require('various-textobjs').subword('outer')]]) },
+		['aW'] = { 'Word', 'aw' },
+
 	},
 	cmp = {
 		[control('n')] = cmp.mapping.select_next_item(),

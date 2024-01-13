@@ -196,8 +196,7 @@ require('lazy').setup({
 	},
 	{
 		'https://github.com/chrisgrieser/nvim-various-textobjs',
-		lazy = false,
-		opts = { useDefaultKeymaps = true },
+		opts = require('plugins.various-textobjs').opts,
 	},
 	{
 		'https://github.com/gsuuon/tshjkl.nvim',
