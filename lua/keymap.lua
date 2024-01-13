@@ -2,6 +2,7 @@ local wk = require('which-key')
 local cmp = require('cmp')
 local harpoon = require('harpoon')
 local gitsigns = require('gitsigns')
+local comment = require('Comment.api')
 
 local utils = require('utils')
 local macros = require('macros')
@@ -17,7 +18,6 @@ wk.register({
 
 local map = {
 	-- https://github.com/chrisgrieser/nvim-various-textobjs
-	-- https://github.com/numToStr/Comment.nvim
 	-- https://github.com/kylechui/nvim-surround
 
 	normal = {
@@ -43,7 +43,7 @@ local map = {
 		['e']                         = { 'End', macros.spider_motion('e') },
 		['b']                         = { 'Back', macros.spider_motion('b') },
 
-		[leader .. 'o']               = { 'Open', macros.open_url_under_cursor },
+		[leader .. 'o' .. 'o']        = { 'Open', macros.open_url_under_cursor },
 
 		-- Sidepanels
 		[leader .. 'n' .. 'n']        = { 'Open filetree', function() vim.cmd.Neotree('toggle') end },
@@ -68,6 +68,11 @@ local map = {
 		[leader .. 'c' .. 't']        = { 'Title case (Lorem Ipsum)', macros.textcase_word('to_title_case') },
 		[leader .. 'c' .. 'r']        = { 'Phrase case (Lorem ipsum)', macros.textcase_word('to_phrase_case') },
 
+		-- Comment
+		[leader .. 'c' .. 'o' .. 'l'] = { 'Comment', comment.call('toggle.linewise.current', 'g@$'), { expr = true } },
+
+
+
 		-- Git
 		[leader .. 'g' .. 'i' .. 't'] = { 'Git', vim.cmd.Git },
 		[leader .. 'g' .. 'l' .. 'l'] = { 'Open link for line', macros.git.open_line_on_origin('n') },
@@ -77,7 +82,7 @@ local map = {
 		['[' .. 'h']                  = { 'Previous hunk', gitsigns.prev_hunk },
 		[leader .. 'g' .. 's']        = { 'Stage hunk', gitsigns.stage_hunk },
 		[leader .. 'g' .. 'r']        = { 'Reset hunk', gitsigns.reset_hunk },
-		[leader .. 'g' .. 'b' .. 's'] = { 'Stage buffer', gitsigns.stage_buffer },
+		[leader .. 'g' .. 'r' .. 's'] = { 'Stage buffer', gitsigns.stage_buffer },
 		[leader .. 'g' .. 'h' .. 'p'] = { 'Preview hunk', gitsigns.preview_hunk },
 		[leader .. 'g' .. 't']        = { 'Toggle line blame', gitsigns.toggle_current_line_blame },
 		[leader .. 'g' .. 'd']        = { 'Diff', function() gitsigns.diffthis('~') end },
@@ -194,7 +199,14 @@ for mode, mappings in pairs(map) do
 	else
 		local modeShorthand = ({ normal = 'n', visual_select = 'v', visual = 'x', operator_pending = 'o' })[mode]
 		for keys, mapping in pairs(mappings) do
-			vim.keymap.set(modeShorthand, keys, mapping[2], { desc = mapping[1], noremap = false, silent = true })
+			local description = mapping[1]
+			local action = mapping[2]
+			local options = { desc = description, noremap = false, silent = true }
+			local extra_options = mapping[3]
+			if extra_options ~= nil then
+				options = vim.tbl_deep_extend("force", options, extra_options)
+			end
+			vim.keymap.set(modeShorthand, keys, action, options)
 		end
 	end
 end
