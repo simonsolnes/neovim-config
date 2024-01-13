@@ -16,9 +16,7 @@ require('lazy').setup({
 
 	{
 		'https://github.com/akinsho/bufferline.nvim',
-		dependencies = {
-			'https://github.com/nvim-tree/nvim-web-devicons',
-		},
+		dependencies = 'https://github.com/nvim-tree/nvim-web-devicons',
 		config = require('plugins.bufferline')
 	},
 	{
@@ -33,10 +31,7 @@ require('lazy').setup({
 		'https://github.com/nvim-treesitter/nvim-treesitter',
 		priority = 999,
 		lazy = false,
-		dependencies = {
-			'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
-			--'https://github.com/RRethy/nvim-treesitter-textsubjects',
-		},
+		dependencies = 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
 		build = ':TSUpdate',
 		config = require('plugins.treesitter'),
 	},
@@ -100,8 +95,7 @@ require('lazy').setup({
 	{
 		-- LSP status
 		'https://github.com/j-hui/fidget.nvim',
-		tag = 'legacy',
-		opts = {}
+		config = true,
 	},
 	{
 		-- Switch theme based on system
@@ -136,8 +130,7 @@ require('lazy').setup({
 		}
 	},
 	{
-		"folke/flash.nvim",
-		event = "VeryLazy",
+		'https://github.com/folke/flash.nvim',
 	},
 	{
 		-- Show token tree
@@ -156,8 +149,8 @@ require('lazy').setup({
 		'https://github.com/tpope/vim-sleuth'
 	},
 	{
-		'ruifm/gitlinker.nvim',
-		dependencies = 'nvim-lua/plenary.nvim',
+		'https://github.com/ruifm/gitlinker.nvim',
+		dependencies = 'https://github.com/nvim-lua/plenary.nvim',
 	},
 	{
 		'https://github.com/lewis6991/gitsigns.nvim',
@@ -168,12 +161,11 @@ require('lazy').setup({
 		-- Highlight TODO, HACK, etc.
 		'https://github.com/folke/todo-comments.nvim',
 		dependencies = { 'https://github.com/nvim-lua/plenary.nvim' },
-		opts = {},
+		config = true,
 	},
 	{
 		-- Show the context parent that is scrolled off at the top
 		'https://github.com/nvim-treesitter/nvim-treesitter-context',
-
 		opts = {
 			separator = nil,
 			min_window_height = 50,
@@ -191,17 +183,16 @@ require('lazy').setup({
 		'https://github.com/simrat39/rust-tools.nvim',
 	},
 	{
-		"https://github.com/folke/trouble.nvim",
-		dependencies = { "https://github.com/nvim-tree/nvim-web-devicons" },
-		opts = {
-			-- your configuration comes here
-			-- or leave it empty to use the default settings
-			-- refer to the configuration section below
-		},
+		'https://github.com/folke/trouble.nvim',
+		dependencies = 'https://github.com/nvim-tree/nvim-web-devicons',
+		config = true,
 	},
 	{
-		"m4xshen/hardtime.nvim",
-		dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+		'https://github.com/m4xshen/hardtime.nvim',
+		dependencies = {
+			'https://MunifTanjim/nui.nvim',
+			'https://nvim-lua/plenary.nvim'
+		},
 		opts = {
 			enabled = false,
 			restricted_keys = {
@@ -209,54 +200,34 @@ require('lazy').setup({
 			}
 		}
 	},
-	--{
-	--	'https://github.com/VonHeikemen/searchbox.nvim',
-	--	dependencies = {
-	--		'https://github.com/MunifTanjim/nui.nvim'
-	--	},
-	--	opts = {
-	--		defaults = {
-	--			highlight_matches = true,
-	--			clear_matches = false,
-	--		}
-	--	}
-	--},
-	{ "https://github.com/stevanmilic/nvim-lspimport" },
-	-- {
-	-- "https://github.com/hachy/cmdpalette.nvim",
-	-- lazy = true,
-	-- cmd = "Cmdpalette",
-	-- config = true,
-	-- },
 	{
-		"folke/noice.nvim",
-		event = "VeryLazy",
+		'https://github.com/stevanmilic/nvim-lspimport'
+	},
+	{
+		'https://github.com/folke/noice.nvim',
+		event = 'VeryLazy',
 		opts = {
 			-- add any options here
 		},
 		dependencies = {
-			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-			"MunifTanjim/nui.nvim",
-			-- OPTIONAL:
-			--   `nvim-notify` is only needed, if you want to use the notification view.
-			--   If not available, we use `mini` as the fallback
-			--"rcarriga/nvim-notify",
+			'MunifTanjim/nui.nvim',
+			--'rcarriga/nvim-notify',
 		},
 		config = require('plugins.noice')
 	},
 	{
-		"https://github.com/johmsalas/text-case.nvim",
-		dependencies = { "https://github.com/nvim-telescope/telescope.nvim" },
+		'https://github.com/johmsalas/text-case.nvim',
+		dependencies = 'https://github.com/nvim-telescope/telescope.nvim',
 		config = function()
-			require("textcase").setup({})
-			require("telescope").load_extension("textcase")
+			require('textcase').setup({})
+			require('telescope').load_extension('textcase')
 		end,
 	},
 	{
-		"https://github.com/chrisgrieser/nvim-spider",
+		'https://github.com/chrisgrieser/nvim-spider',
 	},
 	{
-		"https://github.com/chrisgrieser/nvim-various-textobjs",
+		'https://github.com/chrisgrieser/nvim-various-textobjs',
 		lazy = false,
 		opts = { useDefaultKeymaps = true },
 	},
@@ -280,40 +251,31 @@ require('lazy').setup({
 	},
 	{
 		'https://github.com/stevearc/dressing.nvim',
-		opts = {},
+		config = true,
 	},
 	{
-		"kylechui/nvim-surround",
-		event = "VeryLazy",
+		'https://github.com/kylechui/nvim-surround',
+		event = 'VeryLazy',
 		config = function()
-			require("nvim-surround").setup({
+			require('nvim-surround').setup({
 				-- Configuration here, or leave empty to use defaults
 			})
 		end
 	},
 	{
-		"ThePrimeagen/harpoon",
-		branch = "harpoon2",
-		dependencies = { "nvim-lua/plenary.nvim" },
+		'https://github.com/ThePrimeagen/harpoon',
+		branch = 'harpoon2',
+		dependencies = { 'https://github.com/nvim-lua/plenary.nvim' },
 		config = function()
-			require("harpoon"):setup()
+			require('harpoon'):setup()
 		end
 	},
 	{
-		'gsuuon/tshjkl.nvim',
-		opts = {
-			keymaps = {
-				toggle = '<leader>p',
-			}
-		}
-	},
-	{
 		'http://github.com/stevearc/aerial.nvim',
-		opts = {},
-		-- Optional dependencies
 		dependencies = {
-			"http://github.com/nvim-treesitter/nvim-treesitter",
-			"http://github.com/nvim-tree/nvim-web-devicons"
+			'http://github.com/nvim-treesitter/nvim-treesitter',
+			'http://github.com/nvim-tree/nvim-web-devicons'
 		},
+		config = true,
 	}
 }, {})
