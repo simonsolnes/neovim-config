@@ -119,6 +119,7 @@ local map = {
 		[leader .. 't' .. 'r']        = { 'Resume', function() vim.cmd.Telescope('resume') end },
 		[leader .. 't' .. 'o']        = { 'Old files', function() vim.cmd.Telescope('oldfiles') end },
 		[leader .. 't' .. 's']        = { 'Symbols', function() vim.cmd.Telescope('lsp_dynamic_workspace_symbols') end },
+		[leader .. 't' .. 'h']        = { 'Symbols', function() vim.cmd.Telescope('help_tags') end },
 		[leader .. 'u']               = { 'Buffers', function() vim.cmd.Telescope('buffers') end },
 
 		-- LSP
@@ -144,6 +145,15 @@ local map = {
 
 		[alt('f')]                    = { 'Swap sibling left', sibling_swap.swap_with_left },
 		[alt('p')]                    = { 'Swap sibling right', sibling_swap.swap_with_right },
+
+		-- Surround
+		['cS']                        = { 'Change a surrounding pair, putting replacements on new lines', macros.surround.change_line },
+		['cs']                        = { 'Change a surrounding pair', macros.surround.change },
+		['ds']                        = { 'Delete a surrounding pair', macros.surround.delete },
+		['ySS']                       = { 'Add a surrounding pair around the current line, on new lines (normal mode)', macros.surround.normal_cur_line },
+		['yS']                        = { 'Add a surrounding pair around a motion, on new lines (normal mode)', macros.surround.normal_line },
+		['yss']                       = { 'Add a surrounding pair around the current line (normal mode)', macros.surround.normal_cur },
+		['ys']                        = { 'Add a surrounding pair around a motion (normal mode)', macros.surround.normal },
 	},
 	visual_select = {
 		['J']                         = { 'Move lines down', ":m'>+<cr>gv=gv" },
@@ -162,6 +172,10 @@ local map = {
 	},
 	visual = {
 		['y'] = { 'Yank and retain position', 'ygv<esc>' },
+
+		-- Surround
+		['S'] = { 'Add a surrounding pair around a visual selection', macros.surround.visual },
+		['gS'] = { 'Add a surrounding pair around a visual selection, on new lines', macros.surround.visual_line },
 	},
 	operator_pending = {
 	},

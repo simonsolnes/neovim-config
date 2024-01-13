@@ -27,6 +27,17 @@ return {
 	end,
 	spider_motion = function(motion)
 		return "<cmd>lua require('spider').motion('" .. motion .. "')<cr>"
-	end
+	end,
+	surround = {
+		change = '<Plug>(nvim-surround-change)',
+		change_line = '<Plug>(nvim-surround-change-line)',
+		delete = '<Plug>(nvim-surround-delete)',
+		visual = '<Plug>(nvim-surround-visual)',
+		visual_line = '<Plug>(nvim-surround-visual-line)',
+		normal_cur_line = '<Plug>(nvim-surround-normal-cur-line)',
+		normal_line = '<Plug>(nvim-surround-normal-line)',
+		normal_cur = '<Plug>(nvim-surround-normal-cur)',
+		normal = '<Plug>(nvim-surround-normal)',
+	}
 
 }

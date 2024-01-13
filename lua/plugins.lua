@@ -227,11 +227,7 @@ require('lazy').setup({
 	{
 		'https://github.com/kylechui/nvim-surround',
 		event = 'VeryLazy',
-		config = function()
-			require('nvim-surround').setup({
-				-- Configuration here, or leave empty to use defaults
-			})
-		end
+		config = require('plugins.surround').config,
 	},
 	{
 		'https://github.com/ThePrimeagen/harpoon',
