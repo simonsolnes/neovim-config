@@ -9,27 +9,12 @@ local alt = utils.alt
 local control = utils.control
 local leader = utils.leader
 
-local function textcase_word(arg)
-	return function()
-		require('textcase').current_word(arg)
-	end
-end
-
-local function spider_motion(motion)
-	return "<cmd>lua require('spider').motion('" .. motion .. "')<cr>"
-end
-
 wk.register({
 	t = { name = 'Telescope' },
 	n = { name = 'Sidepanels' },
 	g = { name = 'Git' },
 }, { prefix = '<leader>' })
 
--- Very free buttons:
--- C-j
--- ) and ( for sentences in md etc and something else in code
---
--- Start tracking frequency use of these mappings
 local map = {
 	-- https://github.com/chrisgrieser/nvim-various-textobjs
 	-- https://github.com/numToStr/Comment.nvim
@@ -40,11 +25,8 @@ local map = {
 		[leader .. 'w']               = { 'Write', ':w <cr>' },
 		[leader .. 'q']               = { 'Quit', ':q <cr>' },
 		[leader .. 'r']               = { 'Run', "<cmd>!swift run<cr>" },
-		-- [':']                         = { 'Command', vim.cmd.Cmdpalette },
-		-- ['/']                         = { 'Serch', function() require('searchbox').match_all() end },
 
 		-- Navigation
-		--['s']                         = { 'Hop', vim.cmd.HopChar1 },
 		['s']                         = { 'Jump', function() require("flash").jump() end },
 		['S']                         = { 'Jump', function() require("flash").treesitter() end },
 
@@ -57,9 +39,9 @@ local map = {
 		[alt('a')]                    = { 'Harpoon list', function() harpoon:list():select(4) end },
 
 		-- Replacements
-		['w']                         = { 'Word', spider_motion('w') },
-		['e']                         = { 'End', spider_motion('e') },
-		['b']                         = { 'Back', spider_motion('b') },
+		['w']                         = { 'Word', macros.spider_motion('w') },
+		['e']                         = { 'End', macros.spider_motion('e') },
+		['b']                         = { 'Back', macros.spider_motion('b') },
 
 		[leader .. 'o']               = { 'Open', macros.open_url_under_cursor },
 
@@ -73,18 +55,18 @@ local map = {
 		['<Up>']                      = { 'Open aerial', "<cmd>AerialPrev<CR>" },
 
 		-- Text case conversion
-		[leader .. 'c' .. 's']        = { 'Snake case (lorem_ipsum)', textcase_word('to_snake_case') },
-		[leader .. 'c' .. 'k']        = { 'Kebab case (lorem-ipsum)', textcase_word('to_dash_case') },
-		[leader .. 'c' .. 'f']        = { 'Title kebab case (Lorem-Ipsum)', textcase_word('to_title_dash_case') },
-		[leader .. 'c' .. 'n']        = { 'Constant case (LOREM_IPSUM)', textcase_word('to_constant_case') },
-		[leader .. 'c' .. 'd']        = { 'Dot case (lorem.ipsum)', textcase_word('to_dot_case') },
-		[leader .. 'c' .. 'c']        = { 'Camel case (loremIpsum)', textcase_word('to_camel_case') },
-		[leader .. 'c' .. 'p']        = { 'Pascal case (LoremIpsum)', textcase_word('to_pascal_case') },
-		[leader .. 'c' .. 'h']        = { 'Path case (lorem/ipsum)', textcase_word('to_path_case') },
-		[leader .. 'c' .. 'u']        = { 'Uppercase (LOREM IPSUM)', textcase_word('to_upper_case') },
-		[leader .. 'c' .. 'l']        = { 'Lowercase (lorem ipsum)', textcase_word('to_lower_case') },
-		[leader .. 'c' .. 't']        = { 'Title case (Lorem Ipsum)', textcase_word('to_title_case') },
-		[leader .. 'c' .. 'r']        = { 'Phrase case (Lorem ipsum)', textcase_word('to_phrase_case') },
+		[leader .. 'c' .. 's']        = { 'Snake case (lorem_ipsum)', macros.textcase_word('to_snake_case') },
+		[leader .. 'c' .. 'k']        = { 'Kebab case (lorem-ipsum)', macros.textcase_word('to_dash_case') },
+		[leader .. 'c' .. 'f']        = { 'Title kebab case (Lorem-Ipsum)', macros.textcase_word('to_title_dash_case') },
+		[leader .. 'c' .. 'n']        = { 'Constant case (LOREM_IPSUM)', macros.textcase_word('to_constant_case') },
+		[leader .. 'c' .. 'd']        = { 'Dot case (lorem.ipsum)', macros.textcase_word('to_dot_case') },
+		[leader .. 'c' .. 'c']        = { 'Camel case (loremIpsum)', macros.textcase_word('to_camel_case') },
+		[leader .. 'c' .. 'p']        = { 'Pascal case (LoremIpsum)', macros.textcase_word('to_pascal_case') },
+		[leader .. 'c' .. 'h']        = { 'Path case (lorem/ipsum)', macros.textcase_word('to_path_case') },
+		[leader .. 'c' .. 'u']        = { 'Uppercase (LOREM IPSUM)', macros.textcase_word('to_upper_case') },
+		[leader .. 'c' .. 'l']        = { 'Lowercase (lorem ipsum)', macros.textcase_word('to_lower_case') },
+		[leader .. 'c' .. 't']        = { 'Title case (Lorem Ipsum)', macros.textcase_word('to_title_case') },
+		[leader .. 'c' .. 'r']        = { 'Phrase case (Lorem ipsum)', macros.textcase_word('to_phrase_case') },
 
 		-- Git
 		[leader .. 'g' .. 'i' .. 't'] = { 'Git', vim.cmd.Git },
@@ -172,17 +154,17 @@ local map = {
 		[leader .. 'g' .. 'r']        = { 'Reset hunk', function() gitsigns.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end },
 	},
 	visual = {
-		['w'] = { 'Word', spider_motion('w') },
-		['e'] = { 'End', spider_motion('e') },
-		['b'] = { 'Back', spider_motion('b') },
+		['w'] = { 'Word', macros.spider_motion('w') },
+		['e'] = { 'End', macros.spider_motion('e') },
+		['b'] = { 'Back', macros.spider_motion('b') },
 		['y'] = { 'Yank and retain position', 'ygv<esc>' },
 		['s'] = { 'Jump', function() require("flash").jump() end },
 		['i' .. 'h'] = { 'Hunk', gitsigns.select_hunk },
 	},
 	operator_pending = {
-		['w'] = { 'Word', ('w') },
-		['e'] = { 'End', spider_motion('e') },
-		['b'] = { 'Back', spider_motion('b') },
+		['w'] = { 'Word', macros.spider_motion('w') },
+		['e'] = { 'End', macros.spider_motion('e') },
+		['b'] = { 'Back', macros.spider_motion('b') },
 		['s'] = { 'Jump', function() require("flash").jump() end },
 		['i' .. 'h'] = { 'Hunk', gitsigns.select_hunk },
 	},
@@ -196,6 +178,13 @@ local map = {
 	}
 
 }
+--[[
+Very free buttons:
+- C-j
+- ) and ( for sentences in md etc and something else in code
+
+TODO:Start tracking frequency use of these mappings
+]]
 
 for mode, mappings in pairs(map) do
 	if mode == 'cmp' then

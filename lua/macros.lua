@@ -19,7 +19,14 @@ return {
 				action_callback = require('gitlinker.actions').open_in_browser
 			})
 		end,
-
-	}
+	},
+	textcase_word = function(arg)
+		return function()
+			require('textcase').current_word(arg)
+		end
+	end,
+	spider_motion = function(motion)
+		return "<cmd>lua require('spider').motion('" .. motion .. "')<cr>"
+	end
 
 }
