@@ -13,8 +13,8 @@ local control = utils.control
 local leader = utils.leader
 
 local map = {
-	-- https://github.com/chrisgrieser/nvim-various-textobjs
 	-- https://github.com/kylechui/nvim-surround
+	-- treesitter textobjs
 
 	normal = {
 		-- System

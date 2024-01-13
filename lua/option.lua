@@ -32,3 +32,5 @@ vim.opt.timeoutlen = 200
 
 vim.opt.splitbelow = true
 vim.opt.splitright = true
+
+vim.opt.cursorline = true

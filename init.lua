@@ -41,4 +41,6 @@ end
 Cool plugins:
 https://github.com/Wansmer/binary-swap.nvim
 https://github.com/dgagn/diagflow.nvim
+https://github.com/pmizio/typescript-tools.nvim
+https://github.com/nvim-telescope/telescope-frecency.nvim
 ]]

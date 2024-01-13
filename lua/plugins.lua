@@ -72,6 +72,12 @@ require('lazy').setup({
 		config = require('plugins.telescope').config,
 	},
 	{
+		'https://github.com/elpiloto/telescope-vimwiki.nvim',
+		config = function()
+			require('telescope').load_extension('vimwiki')
+		end
+	},
+	{
 		'https://github.com/nvim-lualine/lualine.nvim',
 		config = require('plugins.lualine').multiple_windows,
 	},

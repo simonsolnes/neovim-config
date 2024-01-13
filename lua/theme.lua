@@ -16,6 +16,7 @@ return {
 			}
 		})
 		vim.api.nvim_set_hl(0, 'MatchParen', { bg = '#aaaa00', fg = '#101010' })
+		vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#807070' })
 
 		-- vim.api.nvim_set_hl(0, 'LineNr', { fg = '#606060' })
 		-- vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#909090' })

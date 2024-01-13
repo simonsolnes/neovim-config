@@ -7,6 +7,9 @@ return {
                prompt_position = "top"
             }
          },
+         extensions = {
+            'vimwiki',
+         }
       })
 
       -- Enable telescope fzf native, if installed
