@@ -13,7 +13,6 @@ local control = utils.control
 local leader = utils.leader
 
 local map = {
-	-- https://github.com/kylechui/nvim-surround
 	-- treesitter textobjs
 
 	normal = {
@@ -65,7 +64,7 @@ local map = {
 		[leader .. 'c' .. 'r']        = { 'Phrase case (Lorem ipsum)', macros.textcase_word('to_phrase_case') },
 
 		-- Comment
-		[leader .. 'c' .. 'o' .. 'l'] = { 'Comment', comment.call('toggle.linewise.current', 'g@$'), { expr = true } },
+		[leader .. 'c' .. 'o' .. 'l'] = { 'Comment', comment.call('toggle.linewise.current', 'g@$'), { keymap_options = { expr = true } } },
 
 		-- Git
 		[leader .. 'g' .. 'i' .. 't'] = { 'Git', vim.cmd.Git },
@@ -142,7 +141,6 @@ local map = {
 		[leader .. 's' .. 'j' .. 't'] = { 'SJ Toggle', treesj.toggle },
 		[leader .. 's' .. 'j' .. 's'] = { 'SJ Split', treesj.split },
 		[leader .. 's' .. 'j' .. 'j'] = { 'SJ Join', treesj.join },
-
 		[alt('f')]                    = { 'Swap sibling left', sibling_swap.swap_with_left },
 		[alt('p')]                    = { 'Swap sibling right', sibling_swap.swap_with_right },
 
@@ -207,8 +205,7 @@ Very free buttons:
 - C-j
 - ) and ( for sentences in md etc and something else in code
 - q can be another button
-
-TODO:Start tracking frequency use of these mappings
+- backlasth
 ]]
 
 for mode, mappings in pairs(map) do
@@ -227,12 +224,14 @@ for mode, mappings in pairs(map) do
 		for keys, mapping in pairs(mappings) do
 			local description = mapping[1]
 			local action = mapping[2]
-			local options = { desc = description, noremap = false, silent = true }
-			local extra_options = mapping[3]
-			if extra_options ~= nil then
-				options = vim.tbl_deep_extend("force", options, extra_options)
+			local keymap_options = { desc = description, noremap = false, silent = true }
+			local options = mapping[3]
+			if options ~= nil then
+				if options['keymap_options'] ~= nil then
+					keymap_options = vim.tbl_deep_extend("force", keymap_options, options.keymap_options)
+				end
 			end
-			vim.keymap.set(modeShorthand, keys, action, options)
+			vim.keymap.set(modeShorthand, keys, action, keymap_options)
 		end
 	end
 end
