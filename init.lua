@@ -36,3 +36,9 @@ end
 --
 -- https://github.com/stevearc/aerial.nvim
 -- https://github.com/folke/noice.nvim
+
+--[[
+Cool plugins:
+https://github.com/Wansmer/binary-swap.nvim
+https://github.com/dgagn/diagflow.nvim
+]]

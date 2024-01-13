@@ -3,6 +3,8 @@ local cmp = require('cmp')
 local harpoon = require('harpoon')
 local gitsigns = require('gitsigns')
 local comment = require('Comment.api')
+local treesj = require('treesj')
+local sibling_swap = require('sibling-swap')
 
 local utils = require('utils')
 local macros = require('macros')
@@ -71,8 +73,6 @@ local map = {
 		-- Comment
 		[leader .. 'c' .. 'o' .. 'l'] = { 'Comment', comment.call('toggle.linewise.current', 'g@$'), { expr = true } },
 
-
-
 		-- Git
 		[leader .. 'g' .. 'i' .. 't'] = { 'Git', vim.cmd.Git },
 		[leader .. 'g' .. 'l' .. 'l'] = { 'Open link for line', macros.git.open_line_on_origin('n') },
@@ -119,30 +119,37 @@ local map = {
 		[control('e')]                = { 'Scroll down', control('e') .. control('e') .. control('e') },
 		[control('y')]                = { 'Scroll up', control('y') .. control('y') .. control('y') },
 
-
 		-- Telescope
-		[leader .. 't' .. 'f'] = { 'Find files', function() vim.cmd.Telescope('find_files') end },
-		[leader .. 't' .. 'g'] = { 'Grep', function() vim.cmd.Telescope('live_grep') end },
-		[leader .. 't' .. 'r'] = { 'Resume', function() vim.cmd.Telescope('resume') end },
-		[leader .. 't' .. 'o'] = { 'Old files', function() vim.cmd.Telescope('oldfiles') end },
-		[leader .. 't' .. 's'] = { 'Symbols', function() vim.cmd.Telescope('lsp_dynamic_workspace_symbols') end },
-		[leader .. 'u'] = { 'Buffers', function() vim.cmd.Telescope('buffers') end },
+		[leader .. 't' .. 'f']        = { 'Find files', function() vim.cmd.Telescope('find_files') end },
+		[leader .. 't' .. 'g']        = { 'Grep', function() vim.cmd.Telescope('live_grep') end },
+		[leader .. 't' .. 'r']        = { 'Resume', function() vim.cmd.Telescope('resume') end },
+		[leader .. 't' .. 'o']        = { 'Old files', function() vim.cmd.Telescope('oldfiles') end },
+		[leader .. 't' .. 's']        = { 'Symbols', function() vim.cmd.Telescope('lsp_dynamic_workspace_symbols') end },
+		[leader .. 'u']               = { 'Buffers', function() vim.cmd.Telescope('buffers') end },
 
 		-- LSP
-		[leader .. 'x' .. 'x'] = { 'Trouble', function() vim.cmd.TroubleToggle() end },
-		[leader .. 'l' .. 's'] = { 'Signature', vim.lsp.buf.signature_help },
-		[leader .. 'l' .. 'i'] = { 'Import', require("lspimport").import },
-		[leader .. 'l' .. 'r'] = { 'Rename', vim.lsp.buf.rename },
-		[leader .. 'l' .. 'a'] = { 'Code action', vim.lsp.buf.code_action },
-		[']' .. 'd'] = { 'Next diagnostic', vim.diagnostic.goto_next },
-		['[' .. 'd'] = { 'Previous diagnostic', vim.diagnostic.goto_prev },
-		['g' .. 'l'] = { 'Diagnostic float', vim.diagnostic.open_float },
-		['g' .. 'r'] = { 'References', function() vim.cmd.Telescope('lsp_references') end },
-		['g' .. 'd'] = { 'Definition', function() vim.cmd.Telescope('lsp_definitions') end },
-		['g' .. 'D'] = { 'Declaration', vim.lsp.buf.declaration },
-		['g' .. 'i'] = { 'Implementation', vim.lsp.buf.implementation },
-		['g' .. 't'] = { 'Type definiition', vim.lsp.buf.type_definition },
-		['K'] = { 'Hover', vim.lsp.buf.hover },
+		[leader .. 'x' .. 'x']        = { 'Trouble', function() vim.cmd.TroubleToggle() end },
+		[leader .. 'l' .. 's']        = { 'Signature', vim.lsp.buf.signature_help },
+		[leader .. 'l' .. 'i']        = { 'Import', require("lspimport").import },
+		[leader .. 'l' .. 'r']        = { 'Rename', vim.lsp.buf.rename },
+		[leader .. 'l' .. 'a']        = { 'Code action', vim.lsp.buf.code_action },
+		[']' .. 'd']                  = { 'Next diagnostic', vim.diagnostic.goto_next },
+		['[' .. 'd']                  = { 'Previous diagnostic', vim.diagnostic.goto_prev },
+		['g' .. 'l']                  = { 'Diagnostic float', vim.diagnostic.open_float },
+		['g' .. 'r']                  = { 'References', function() vim.cmd.Telescope('lsp_references') end },
+		['g' .. 'd']                  = { 'Definition', function() vim.cmd.Telescope('lsp_definitions') end },
+		['g' .. 'D']                  = { 'Declaration', vim.lsp.buf.declaration },
+		['g' .. 'i']                  = { 'Implementation', vim.lsp.buf.implementation },
+		['g' .. 't']                  = { 'Type definiition', vim.lsp.buf.type_definition },
+		['K']                         = { 'Hover', vim.lsp.buf.hover },
+
+		-- Tree operations
+		[leader .. 's' .. 'j' .. 't'] = { 'SJ Toggle', treesj.toggle },
+		[leader .. 's' .. 'j' .. 's'] = { 'SJ Split', treesj.split },
+		[leader .. 's' .. 'j' .. 'j'] = { 'SJ Join', treesj.join },
+
+		[alt('f')]                    = { 'Swap sibling left', sibling_swap.swap_with_left },
+		[alt('p')]                    = { 'Swap sibling right', sibling_swap.swap_with_right },
 	},
 	visual_select = {
 		['J']                         = { 'Move lines down', ":m'>+<cr>gv=gv" },
@@ -157,20 +164,19 @@ local map = {
 
 		[leader .. 'g' .. 's']        = { 'Stage hunk', function() gitsigns.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end },
 		[leader .. 'g' .. 'r']        = { 'Reset hunk', function() gitsigns.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end },
+
 	},
 	visual = {
-		['w'] = { 'Word', macros.spider_motion('w') },
-		['e'] = { 'End', macros.spider_motion('e') },
-		['b'] = { 'Back', macros.spider_motion('b') },
 		['y'] = { 'Yank and retain position', 'ygv<esc>' },
-		['s'] = { 'Jump', function() require("flash").jump() end },
-		['i' .. 'h'] = { 'Hunk', gitsigns.select_hunk },
 	},
 	operator_pending = {
+	},
+
+	visual_and_operator_pending = {
+		['s'] = { 'Jump', function() require("flash").jump() end },
 		['w'] = { 'Word', macros.spider_motion('w') },
 		['e'] = { 'End', macros.spider_motion('e') },
 		['b'] = { 'Back', macros.spider_motion('b') },
-		['s'] = { 'Jump', function() require("flash").jump() end },
 		['i' .. 'h'] = { 'Hunk', gitsigns.select_hunk },
 	},
 	cmp = {
@@ -187,6 +193,7 @@ local map = {
 Very free buttons:
 - C-j
 - ) and ( for sentences in md etc and something else in code
+- q can be another button
 
 TODO:Start tracking frequency use of these mappings
 ]]
@@ -197,7 +204,13 @@ for mode, mappings in pairs(map) do
 			mapping = cmp.mapping.preset.insert(mappings)
 		})
 	else
-		local modeShorthand = ({ normal = 'n', visual_select = 'v', visual = 'x', operator_pending = 'o' })[mode]
+		local modeShorthand = ({
+			normal = 'n',
+			visual_select = 'v',
+			visual = 'x',
+			operator_pending = 'o',
+			visual_and_operator_pending = { 'x', 'o' },
+		})[mode]
 		for keys, mapping in pairs(mappings) do
 			local description = mapping[1]
 			local action = mapping[2]

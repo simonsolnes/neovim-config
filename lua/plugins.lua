@@ -241,5 +241,17 @@ require('lazy').setup({
 			'http://github.com/nvim-tree/nvim-web-devicons'
 		},
 		config = true,
-	}
+	},
+	{
+		-- TreeSJ
+		'http://github.com/Wansmer/treesj',
+		dependencies = { 'http://github.com/nvim-treesitter/nvim-treesitter' },
+		config = require('plugins.treesj').config,
+	},
+	{
+		-- Sibling-swap
+		'http://github.com/Wansmer/sibling-swap.nvim',
+		dependencies = { 'http://github.com/nvim-treesitter/nvim-treesitter' },
+		config = require('plugins.sibling-swap').config,
+	},
 }, {})
