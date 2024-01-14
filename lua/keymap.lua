@@ -64,7 +64,7 @@ local map = {
 		[leader .. 'c' .. 'r']        = { 'Phrase case (Lorem ipsum)', macros.textcase_word('to_phrase_case') },
 
 		-- Comment
-		[leader .. 'c' .. 'o' .. 'l'] = { 'Comment', comment.call('toggle.linewise.current', 'g@$'), { keymap_options = { expr = true } } },
+		--[leader .. 'c' .. 'o' .. 'l'] = { 'Comment', comment.call('toggle.linewise.current', 'g@$'), { keymap_options = { expr = true } } },
 
 		-- Git
 		[leader .. 'g' .. 'i' .. 't'] = { 'Git', vim.cmd.Git },
@@ -75,7 +75,7 @@ local map = {
 		['[' .. 'h']                  = { 'Previous hunk', gitsigns.prev_hunk },
 		[leader .. 'g' .. 's']        = { 'Stage hunk', gitsigns.stage_hunk },
 		[leader .. 'g' .. 'r']        = { 'Reset hunk', gitsigns.reset_hunk },
-		[leader .. 'g' .. 'r' .. 's'] = { 'Stage buffer', gitsigns.stage_buffer },
+		[leader .. 'g' .. 'f' .. 's'] = { 'Stage buffer', gitsigns.stage_buffer },
 		[leader .. 'g' .. 'h' .. 'p'] = { 'Preview hunk', gitsigns.preview_hunk },
 		[leader .. 'g' .. 't']        = { 'Toggle line blame', gitsigns.toggle_current_line_blame },
 		[leader .. 'g' .. 'd']        = { 'Diff', function() gitsigns.diffthis('~') end },
@@ -152,6 +152,10 @@ local map = {
 		['yS']                        = { 'Add a surrounding pair around a motion, on new lines (normal mode)', macros.surround.normal_line },
 		['yss']                       = { 'Add a surrounding pair around the current line (normal mode)', macros.surround.normal_cur },
 		['ys']                        = { 'Add a surrounding pair around a motion (normal mode)', macros.surround.normal },
+
+		-- Comment
+		['gb']                        = { 'Comment toggle blockwise (visual)', macros.comment.toggle_blockwise },
+		['gc']                        = { 'Comment toggle linewise (visual)', macros.comment.toggle_linewise },
 	},
 	visual_select = {
 		['J']                         = { 'Move lines down', ":m'>+<cr>gv=gv" },
@@ -162,8 +166,6 @@ local map = {
 		['<']                         = { 'Indent left', '<gv' },
 
 		[leader .. 'g' .. 'l' .. 'l'] = { 'Open link for lines', macros.git.open_line_on_origin('v') },
-		['g' .. 'c' .. 'c']           = { '', function() print("hello") end },
-
 		[leader .. 'g' .. 's']        = { 'Stage hunk', function() gitsigns.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end },
 		[leader .. 'g' .. 'r']        = { 'Reset hunk', function() gitsigns.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end },
 
@@ -174,6 +176,10 @@ local map = {
 		-- Surround
 		['S'] = { 'Add a surrounding pair around a visual selection', macros.surround.visual },
 		['gS'] = { 'Add a surrounding pair around a visual selection, on new lines', macros.surround.visual_line },
+
+		-- Comment
+		['gb'] = { 'Comment toggle blockwise (visual)', macros.comment.toggle_blockwise_visual },
+		['gc'] = { 'Comment toggle linewise (visual)', macros.comment.toggle_linewise_visual },
 	},
 	operator_pending = {
 	},
