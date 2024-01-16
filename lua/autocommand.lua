@@ -49,6 +49,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
 })
 ]]
 
+
 -- set tab to 3 space when entering a buffer with .lua file
 vim.api.nvim_create_autocmd("BufEnter", {
 	pattern = { "*.lua" },
@@ -60,7 +61,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	end
 })
 
-vim.api.nvim_create_autocmd("FocusLost", {
+vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost" }, {
 	command = ":wa",
 	desc = "Autosave all buffers when focus is lost"
 })
