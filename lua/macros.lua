@@ -38,6 +38,12 @@ return {
 		normal_line = '<Plug>(nvim-surround-normal-line)',
 		normal_cur = '<Plug>(nvim-surround-normal-cur)',
 		normal = '<Plug>(nvim-surround-normal)',
+	},
+	comment = {
+		toggle_blockwise_visual = '<Plug>(comment_toggle_blockwise_visual)',
+		toggle_linewise_visual = '<Plug>(comment_toggle_linewise_visual)',
+		toggle_blockwise = '<Plug>(comment_toggle_blockwise)',
+		toggle_linewise = '<Plug>(comment_toggle_linewise)',
 	}
 
 }

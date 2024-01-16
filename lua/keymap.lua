@@ -25,6 +25,8 @@ local map = {
 		['s']                         = { 'Jump', function() require("flash").jump() end },
 		['S']                         = { 'Jump', function() require("flash").treesitter() end },
 
+		['\\']                        = { 'Aerial Nav', vim.cmd.AerialNavToggle },
+
 		-- Harpoon
 		[leader .. 'h' .. 'a']        = { 'Harpoon add', function() harpoon:list():append() end },
 		[leader .. 'h' .. 'l']        = { 'Harpoon list', function() harpoon.ui:toggle_quick_menu(harpoon:list()) end },
