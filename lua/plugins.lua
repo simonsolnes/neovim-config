@@ -122,6 +122,7 @@ require('lazy').setup({
 	},
 	{
 		'https://github.com/folke/flash.nvim',
+		opts = require('plugins.flash').opts,
 	},
 	{
 		-- Show token tree
