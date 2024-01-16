@@ -9,6 +9,15 @@ return {
          },
          extensions = {
             'vimwiki',
+         },
+         mappings = {
+            n = {
+               ['∑'] = require('telescope.actions').delete_buffer
+            }, -- n
+            i = {
+               ["<C-h>"] = "which_key",
+               ['∑'] = require('telescope.actions').delete_buffer
+            } -- i
          }
       })
 
