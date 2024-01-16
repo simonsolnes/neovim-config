@@ -1,3 +1,9 @@
+local function common()
+	vim.fn.sign_define("DiagnosticSignError", { text = '󰅚', texthl = "DiagnosticSignError" })
+	vim.fn.sign_define("DiagnosticSignWarn", { text = '', texthl = "DiagnosticSignWarn" })
+	vim.fn.sign_define("DiagnosticSignInfo", { text = '', texthl = "DiagnosticSignInfo" })
+	vim.fn.sign_define("DiagnosticSignHint", { text = '', texthl = "DiagnosticSignHint" })
+end
 return {
 	colorscheme = 'onedark',
 	onedarkpro_opts = {
@@ -17,6 +23,7 @@ return {
 		})
 		vim.api.nvim_set_hl(0, 'MatchParen', { bg = '#aaaa00', fg = '#101010' })
 		vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#807070' })
+		common()
 
 		-- vim.api.nvim_set_hl(0, 'LineNr', { fg = '#606060' })
 		-- vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#909090' })
@@ -34,5 +41,6 @@ return {
 				theme = 'onelight'
 			}
 		})
+		common()
 	end,
 }
